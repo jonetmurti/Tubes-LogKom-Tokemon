@@ -64,6 +64,10 @@ inventory(Name, X).
 /* MAP */
 drawMap(Symbol,X,Y) :- 
 
+/* ERROR MSG */
+invalidMove :- write()
+invalidCmd :- write()
+
 /* GAME */
 start :-  write('Gotta catch them all!'),nl,nl,
 		  write('Hello there!'),nl, 
