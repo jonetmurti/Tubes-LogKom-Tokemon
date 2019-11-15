@@ -5,6 +5,9 @@ append([A|B], X, [A|C]) :- append(B, X, C).
 isMember(X, [], 0).
 isMember(X, [A|B], 1) :- X == A.
 isMember(X, [A|B], Y) :- isMember(X, B, Y1) , Y is Y1.
+:- dynamic(playerloc/2).
+
+/* TOKEMON */
 
 /* TOKEMON */
 :- dynamic(tokemonPos/3).
@@ -68,7 +71,6 @@ spcAtt(suketmon, 40).
 /* PLAYER */
 :- dynamic(state/1).
 state(inMenu).
-position(Name, X, Y).
 
 /* Inventory */
 :- dynamic(inventory/2).
@@ -77,7 +79,7 @@ nbInv(0).
 healTokemon :- 
 
 /* MAP */
-drawMap(Symbol,X,Y) :- 
+drawMap(Symbol,X,Y) :- !.
 
 /* ERROR MSG */
 invalidMove :- write()
@@ -126,7 +128,7 @@ initTokemon :- X1List is [], Y1List is [], randomTokemonPos(X1, Y1, X1List, Y1Li
                
 
 init :- chooseTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)), asserta(state(inGame)),
-        nbInv(Sum), newSum is Sum + 1, retract(nbInv(Sum)), asserta(nbInv(newSum)), initTokemon, position(Nama, 0, 0).
+        nbInv(Sum), newSum is Sum + 1, retract(nbInv(Sum)), asserta(nbInv(newSum)), initTokemon, asserta(playerloc(1,1)).
 
 processCmd(Cmd) :- Cmd == w, w, cekLoc.
 processCmd(Cmd) :- Cmd == a, a, cekLoc.
@@ -170,44 +172,43 @@ start :-  write('Gotta catch them all!'),nl,nl,
           write('-X = Pagar'),nl,
           write('-P = Player'),nl,
 		  		write('-G = Gym'),nl,
-          init, .
+          init.
 
 
 
 /* Move */
-:- dynamic position/3.
 
-w :- position(Nama,X,Y),\+(Y=0),
+w :- playerloc(X,Y),\+(Y=0),
      YNew is Y - 1,
-     asserta(position(Nama,X,YNew)),
+     asserta(playerloc(X,YNew)),
      write('Anda bergerak ke utara, anda berada pada tanah kosong.').
 
-w :- position(_,_,Y),Y=0,
+w :- playerloc(_,Y),Y=0,
      write('Anda berada di ujung utara.').
 
-a :- position(Nama,X,Y),\+(X=0),
+a :- playerloc(X,Y),\+(X=0),
      XNew is X - 1,
-     asserta(position(Nama,XNew,Y)),
+     asserta(playerloc(XNew,Y)),
      write('Anda bergerak ke barat, anda berada pada tanah kosong.').
 
-a :- position(_,X,_),X=0,
+a :- playerloc(X,_),X=0,
      write('Anda berada di ujung barat.').
 
 
-s :- position(Nama,X,Y),mapsize(Xmap,Ymap),Y<Ymap,
+s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y<Ymap,
      YNew is Y + 1,
-     asserta(position(Nama,X,YNew)),
+     asserta(playerloc(X,YNew)),
      write('Anda bergerak ke selatan, anda berada pada tanah kosong.').
 
-s :- position(Nama,X,Y),mapsize(Xmap,Ymap),Y=Ymap,
+s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y=Ymap,
      write('Anda berada di ujung selatan').
 
-d :- position(Nama,X,Y),mapsize(Xmap,Ymap),X<Xmap,
+d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
      XNew is X + 1,
-     asserta(position(Nama,XNew,Y)),
+     asserta(playerloc(XNew,Y)),
      write('Anda bergerak ke selatan, anda berada pada tanah kosong.').
 
-d :- position(Nama,X,Y),mapsize(Xmap,Ymap),X=Xmap,
+d :- playerloc(X,Y),mapsize(Xmap,Ymap),X=Xmap,
      write('Anda berada di ujung timur').
 
 
@@ -226,6 +227,7 @@ status:-
 	write("Health: "),Health(X, Y),nl,write(Y),nl,
 	write("Type: "),type(X,Z),nl,write(Z),nl
   ))!.
+<<<<<<< HEAD
   
   /* PETA */
   cetakBorderAtas(0) :- nl,!.
@@ -264,3 +266,5 @@ cetakPeta(X,Y) :-
  cetakBorderAtas(X2),
  cetakBaris(X,1,Y),
  cetakBorderAtas(X2),!.
+=======
+>>>>>>> d5932800bc0c9f61f88f665abf856bdd57b7012a
