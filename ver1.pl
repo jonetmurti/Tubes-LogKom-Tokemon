@@ -1,5 +1,13 @@
-/* TOKEMON */
+/* PRIMITIF */
+append([], X, X).
+append([A|B], X, [A|C]) :- append(B, X, C).
 
+isMember(X, [], 0).
+isMember(X, [A|B], 1) :- X == A.
+isMember(X, [A|B], Y) :- isMember(X, B, Y1) , Y is Y1.
+
+/* TOKEMON */
+:- dynamic(tokemonPos/3).
 /* Legendary */
 name(rahamon, legedary).
 health(rahamon, 1000).
@@ -56,17 +64,24 @@ type(suketmon, grass).
 normalAtt(suketmon, 25).
 spcAtt(suketmon, 40).
 
+
 /* PLAYER */
-state(Name, State).
+:- dynamic(state/1).
+state(inMenu).
 position(Name, X, Y).
-inventory(Name, A, B, C, D, E, F, Count).
+
+/* Inventory */
+:- dynamic(inventory/2).
+:- dynamic (nbInv/1).
+nbInv(0).
+healTokemon :- 
 
 /* MAP */
 drawMap(Symbol,X,Y) :- 
 
 /* ERROR MSG */
 invalidMove :- write()
-invalidCmd :- write()
+invalidCmd :- write('Invalid Command !').
 invalidChoose :- write()
 
 /* HELP */
@@ -92,11 +107,45 @@ chooseTokemon(X) :-repeat, write('Choose Your Tokemon : '), nl,
 									 write('1. seamon'), nl,
 								   write('2. jonemon'), nl,
 									 write('3. lemon'), nl, 
-									 write('> '), read(X), firstTokemon(X) -> true ; write('Invalid Tokemon'), nl, fail.
+									 write('> '), read(X), firstTokemon(X).
 
 firstTokemon(seamon).
 firstTokemon(jonemon).
 firstTokemon(lemon).
+
+randomTokemonPos(X, Y, Xlist, Ylist) :- repeat, random(0, 10, X), random(0, 10, Y), isMember(X, Xlist, ExistX), isMember(X, Xlist, ExistY), ExistX == 0, ExistY == 0.
+initTokemon :- X1List is [], Y1List is [], randomTokemonPos(X1, Y1, X1List, Y1List), asserta(tokemonPos(seamon, X1, Y1)), append(X1List, X1, X2List), append(Y1List, Y1, Y2List),
+               randomTokemonPos(X2, Y2, X2List, Y2List), asserta(tokemonPos(jonemon, X2, Y2)), append(X2List, X2, X3List), append(Y2List, Y2, Y3List),
+               randomTokemonPos(X3, Y3, X3List, Y3List), asserta(tokemonPos(mamaLemon, X3, Y3)), append(X3List, X3, X4List), append(Y3List, Y3, Y4List),
+               randomTokemonPos(X4, Y4, X4List, Y4List), asserta(tokemonPos(lemon, X4, Y4)), append(X4List, X4, X5List), append(Y4List, Y4, Y5List),
+               randomTokemonPos(X5, Y5, X5List, Y5List), asserta(tokemonPos(kemon, X5, Y5)), append(X5List, X5, X6List), append(Y5List, Y5, Y6List),
+               randomTokemonPos(X6, Y6, X6List, Y6List), asserta(tokemonPos(suketmon, X6, Y6)), append(X6List, X6, X7List), append(Y6List, Y6, Y7List),
+               randomTokemonPos(X7, Y7, X7List, Y7List), asserta(tokemonPos(rahamon, X7, Y7)), append(X7List, X7, X8List), append(Y7List, Y7, Y8List),
+               randomTokemonPos(X8, Y8, X8List, Y8List), asserta(tokemonPos(logkomon, X8, Y8)), append(X8List, X8, X9List), append(Y8List, Y8, Y9List),
+               randomTokemonPos(X9, Y9, X9List, Y9List), asserta(tokemonPos(hizmon, X9, Y9)).
+               
+
+init :- chooseTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)), asserta(state(inGame)),
+        nbInv(Sum), newSum is Sum + 1, retract(nbInv(Sum)), asserta(nbInv(newSum)), initTokemon, position(Nama, 0, 0).
+
+processCmd(Cmd) :- Cmd == w, w, cekLoc.
+processCmd(Cmd) :- Cmd == a, a, cekLoc.
+processCmd(Cmd) :- Cmd == s, s, cekLoc. 
+processCmd(Cmd) :- Cmd == d, d, cekLoc.
+processCmd(Cmd) :- Cmd == map, \+state(inBattle), .
+processCmd(Cmd) :- Cmd == heal, state(inGym), healTokemon.
+processCmd(Cmd) :- Cmd == status,
+processCmd(Cmd) :- Cmd == pick,
+processCmd(Cmd) :- Cmd == attack,
+processCmd(Cmd) :- Cmd == specialAttack,
+processCmd(Cmd) :- Cmd == run,
+processCmd(Cmd) :- Cmd == drop,
+processCmd(Cmd) :- Cmd == save,
+processCmd(Cmd) :- Cmd == load,
+processCmd(Cmd) :- Cmd == help, help.
+processCmd(Cmd) :- invalidCmd.
+
+gameLoop :- repeat, write('Command Input : '), read(Cmd), Cmd == quit , processCmd(Cmd).
 
 start :-  write('Gotta catch them all!'),nl,nl,
 		  		write('Hello there!'),nl, 
@@ -121,7 +170,7 @@ start :-  write('Gotta catch them all!'),nl,nl,
           write('-X = Pagar'),nl,
           write('-P = Player'),nl,
 		  		write('-G = Gym'),nl,
-          chooseTokemon(Tokemon).
+          init, .
 
 
 
