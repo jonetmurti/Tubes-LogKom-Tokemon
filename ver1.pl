@@ -1,3 +1,5 @@
+:- dynamic(playerloc/2).
+
 /* TOKEMON */
 
 /* Legendary */
@@ -62,12 +64,12 @@ position(Name, X, Y).
 inventory(Name, A, B, C, D, E, F, Count).
 
 /* MAP */
-drawMap(Symbol,X,Y) :- 
+drawMap(Symbol,X,Y) :- !.
 
 /* ERROR MSG */
-invalidMove :- write()
-invalidCmd :- write()
-invalidChoose :- write()
+invalidMove :- write().
+invalidCmd :- write().
+invalidChoose :- write().
 
 /* HELP */
 help :- write('Help :'), nl, nl,
@@ -121,7 +123,8 @@ start :-  write('Gotta catch them all!'),nl,nl,
           write('-X = Pagar'),nl,
           write('-P = Player'),nl,
 		  		write('-G = Gym'),nl,
-          chooseTokemon(Tokemon).
+          chooseTokemon(Tokemon),
+          asserta(playerloc(1,1)).
 
 
 
@@ -177,41 +180,3 @@ status:-
 	write("Health: "),Health(X, Y),nl,write(Y),nl,
 	write("Type: "),type(X,Z),nl,write(Z),nl
   ))!.
-  
-  /* PETA */
-  cetakBorderAtas(0) :- nl,!.
-
-cetakBorderAtas(X) :-
-  write('X'),
-  X2 is X - 1,
-  cetakBorderAtas(X2),!.
-
-cetakBorder :-
- write('X'),!.
-
-cetakField(X,Y) :-
- X > Y,
- !.
-
-cetakField(X,Y) :-
- \+(X > Y),
- write('-'),
- X2 is X + 1,
- cetakField(X2,Y).
-
-cetakBaris(X,Y,Z) :- 
-  Y>Z, !.
-
-cetakBaris(X,Y,Z) :-
- \+(Y>Z),
- cetakBorder,
- cetakField(1,X),
- cetakBorder,nl,
- Y2 is Y + 1,
- cetakBaris(X,Y2,Z),!. 
-
-cetakPeta(X,Y) :-
- X2 is X + 2,
- cetakBorderAtas(X2),
- cetakBaris(X,1,Y),
- cetakBorderAtas(X2),!.
