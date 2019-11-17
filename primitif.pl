@@ -7,3 +7,6 @@ isMember(X, [A|B], 1) :- X == A.
 isMember(X, [A|B], Y) :- isMember(X, B, Y1) , Y is Y1.
 
 listkosong(X) :- X = [].
+
+forall(Cond, Action) :-
+    \+ (Cond, \+ Action).

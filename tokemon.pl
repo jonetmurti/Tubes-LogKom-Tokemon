@@ -56,9 +56,9 @@ normalAtt(suketmon, 25).
 spcAtt(suketmon, 40).
 
 /* First Tokemon choose */
-firstTokemon(seamon).
-firstTokemon(jonemon).
-firstTokemon(lemon).
+startTokemon(seamon).
+startTokemon(jonemon).
+startTokemon(lemon).
 
 /* Tokemon Position in Map(changing over time) */
 :- dynamic(tokemonPos/3).

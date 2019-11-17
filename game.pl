@@ -11,11 +11,11 @@
 randomTokemonPos(X, Y, Xlist, Ylist) :- repeat, random(0, 10, X), random(0, 10, Y), isMember(X, Xlist, ExistX), isMember(Y, Ylist, ExistY), ExistX == 0, ExistY == 0.
 
 /* Initiation */
-chooseTokemon(X) :-repeat, write('Choose Your Tokemon : '), nl,
+chooseTokemon :-repeat, write('Choose Your Tokemon : '), nl,
 				   write('1. seamon'), nl,
 				   write('2. jonemon'), nl,
 				   write('3. lemon'), nl, 
-				   write('> '), read(X), firstTokemon(X).
+				   write('> '), read(X), startTokemon(X), asserta(firstTokenmon).
 
 
 initTokemon :- X1List = [], Y1List = [], randomTokemonPos(X1, Y1, X1List, Y1List), asserta(tokemonPos(seamon, X1, Y1)), sambung(X1List, X1, X2List), sambung(Y1List, Y1, Y2List),
@@ -29,7 +29,7 @@ initTokemon :- X1List = [], Y1List = [], randomTokemonPos(X1, Y1, X1List, Y1List
                randomTokemonPos(X9, Y9, X9List, Y9List), asserta(tokemonPos(hizmon, X9, Y9)).
                
 
-init :- chooseTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)), asserta(state(inGame)), asserta(state(inMap)),
+init :- chooseTokemon, firstTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)), asserta(state(inGame)), asserta(state(inMap)),
         asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)).
 
 /* Start Game */
@@ -46,12 +46,12 @@ start :-  write('Gotta catch them all!'),nl,nl,
           write('start. 			--start the game!'),nl,
           write('help. 				--show available commands'),nl,
           write('quit. 				--quit the game'),nl,
-          write('w. a. s. d.	    --mov'),nl,
+          write('w. a. s. d.		--mov'),nl,
           write('emap. 				--look at the map'),nl, 
           write('heal. 				--cure Tokemon in inventory if in gym center'),nl,
           write('status. 			--show your status'),nl,
-          write('save(Filenama). --save your game'),nl,
-          write('load(Filenama). --load previously saved game'),nl,					
+          write('save(Filenama). 	--save your game'),nl,
+          write('load(Filenama). 	--load previously saved game'),nl,					
           write('Legends:'),nl,
           write('-X = Pagar'),nl,
           write('-P = Player'),nl,
