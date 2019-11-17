@@ -73,8 +73,22 @@ firstTokemon(lemon).
 /* Randomize tokemon position in map */
 randomTokemonPos(X, Y, Xlist, Ylist) :- repeat, random(1, 11, X), random(1, 11, Y), isMember(X, Xlist, ExistX), isMember(Y, Xlist, ExistY), ExistX == 0, ExistY == 0.
 
+/* Untuk Tokemon menghindari para */
+pagarmon(U,V,X,Y) :- \+pagar(U,V),U=X,V=Y.
+pagarmon(U,V,X,Y) :- random(1, 11, X1), random(1, 11, Y1),pagarmon(X1,Y1,X,Y).
+
 /* Tokemon Position in Map(changing over time) */
 :- dynamic(tokemonPos/3).
+/*initTokemon :- random(1, 11, X1), random(1, 11, Y1), pagarmon(X1,Y1,X1n,Y1n), asserta(tokemonPos(rahamon, X1n, Y1n)),
+               random(1, 11, X2), random(1, 11, Y2), pagarmon(X2,Y2,X2n,Y2n), asserta(tokemonPos(logkomon, X2n, Y2n)),
+               random(1, 11, X3), random(1, 11, Y3), pagarmon(X3,Y3,X3n,Y3n), asserta(tokemonPos(hizmon, X3n, Y3n)),
+               random(1, 11, X4), random(1, 11, Y4), pagarmon(X4,Y4,X4n,Y4n), asserta(tokemonPos(seamon, X4n, Y4n)),
+               random(1, 11, X5), random(1, 11, Y5), pagarmon(X5,Y5,X5n,Y5n), asserta(tokemonPos(jonemon, X5n, Y5n)),
+               random(1, 11, X6), random(1, 11, Y6), pagarmon(X6,Y6,X6n,Y6n), asserta(tokemonPos(mamaLemon, X6n, Y6n)),
+               random(1, 11, X7), random(1, 11, Y7), pagarmon(X7,Y7,X7n,Y7n), asserta(tokemonPos(lemon, X7n, Y7n)),
+               random(1, 11, X8), random(1, 11, Y8), pagarmon(X8,Y8,X8n,Y8n), asserta(tokemonPos(kemon, X8n, Y8n)),
+               random(1, 11, X9), random(1, 11, Y9), pagarmon(X9,Y9,X9n,Y9n), asserta(tokemonPos(suketmon, X9n, Y9n)).*/
+
 initTokemon :- random(1, 11, X1), random(1, 11, Y1), asserta(tokemonPos(rahamon, X1, Y1)),
                random(1, 11, X2), random(1, 11, Y2), asserta(tokemonPos(logkomon, X2, Y2)),
                random(1, 11, X3), random(1, 11, Y3), asserta(tokemonPos(hizmon, X3, Y3)),

@@ -1,6 +1,17 @@
 :-include('faktaPlayer.pl').
 
 gymLoc(4,4).
+pagar(3,5).
+pagar(4,5).
+pagar(4,6).
+pagar(4,7).
+pagar(5,8).
+pagar(6,9).
+pagar(5,5).
+pagar(6,5).
+pagar(7,5).
+pagar(8,5).
+
 
 cetakBorderH(0) :- nl,!.
 
@@ -21,6 +32,7 @@ cetakField(A,X,B) :-
     \+playerloc(A,B),
     \+(A > X),
     \+(gymLoc(A,B)),
+    \+pagar(A,B),
     \+tokemonPos(_,A,B),
     write('-'),
     A2 is A + 1,
@@ -35,8 +47,15 @@ cetakField(A,X,B) :-
 
 cetakField(A,X,B) :-
     \+(A > X),
+    pagar(A,B),
+    write('X'),
+    A2 is A + 1,
+    cetakField(A2,X,B).
+
+cetakField(A,X,B) :-
+    \+(A > X),
     tokemonPos(_,A,B),
-    write('O'),
+    write('o'),
     A2 is A + 1,
     cetakField(A2,X,B).
 
@@ -46,7 +65,6 @@ cetakField(A,X,B) :-
     write('P'),
     A2 is A + 1,
     cetakField(A2,X,B).
-
 
 cetakBaris(X,B,Y) :- 
     B>Y, !.
