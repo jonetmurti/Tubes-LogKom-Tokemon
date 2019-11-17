@@ -15,9 +15,9 @@ currTokemon :- write('You haven\'t choose your Tokemon').
 
 /* Legendary */
 
-nama(rahamon, legedary).
-nama(logkomon, legedary).
-nama(hizmon, legedary).
+nama(rahamon, legendary).
+nama(logkomon, legendary).
+nama(hizmon, legendary).
 nama(seamon, normal).
 nama(kemon, normal).
 nama(jonemon, normal).
