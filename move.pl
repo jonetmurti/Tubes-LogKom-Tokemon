@@ -1,6 +1,7 @@
-:- include('faktaPlayer.pl').
-
 /* Move */
+
+w :- \+state(inGame),
+     write('Anda belum memulai game!!').
 
 w :- playerloc(X,Y),\+(Y=1),
      YNew is Y - 1,
@@ -11,6 +12,9 @@ w :- playerloc(X,Y),\+(Y=1),
 w :- playerloc(_,Y),Y=1,
      write('Anda berada di ujung utara.').
 
+a :- \+state(inGame),
+     write('Anda belum memulai game!!').
+
 a :- playerloc(X,Y),\+(X=1),
      XNew is X - 1,
      retract(playerloc(X,Y)),
@@ -20,6 +24,8 @@ a :- playerloc(X,Y),\+(X=1),
 a :- playerloc(X,_),X=1,
      write('Anda berada di ujung barat.').
 
+s :- \+state(inGame),
+     write('Anda belum memulai game!!').
 
 s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y<Ymap,
      YNew is Y + 1,
@@ -29,6 +35,9 @@ s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y<Ymap,
 
 s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y=Ymap,
      write('Anda berada di ujung selatan').
+
+d :- \+state(inGame),
+     write('Anda belum memulai game!!').
 
 d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
      XNew is X + 1,
