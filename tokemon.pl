@@ -55,7 +55,6 @@ normalAtt(lemon, 20).
 normalAtt(kemon, 10).
 normalAtt(suketmon, 25).
 
-%spesial attact spcAtt/2
 spcAtt(rahamon, 70).
 spcAtt(logkomon, 90).
 spcAtt(hizmon, 80).
@@ -101,4 +100,3 @@ procHeal(Tokemon, Health) :- retract(inventory(Tokemon, Health)), health(Tokemon
 printAvailTokemon :- write('Available Tokemon : '), nl,
                      forall(inventory(Tokemon, Health), printTokemonName(Tokemon)).
 printTokemonName(Tokemon) :- write('- '), write(Tokemon), nl.
- 
