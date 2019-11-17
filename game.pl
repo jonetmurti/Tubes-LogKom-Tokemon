@@ -5,15 +5,16 @@
 :-include('map.pl').
 
 /* Initiation */
-chooseTokemon :-repeat, write('Choose Your Tokemon : '), nl,
-				   write('1. seamon'), nl,
-				   write('2. jonemon'), nl,
-				   write('3. lemon'), nl, 
-				   write('> '), read(X), firstTokemon(X).
+chooseTokemon(Tokemon) :-repeat, write('Choose Your Tokemon : '), nl,
+				        write('1. seamon'), nl,
+				        write('2. jonemon'), nl,
+				        write('3. lemon'), nl, 
+				        write('> '), read(X), startTokemon(X).
                
 
 init :- asserta(state(inGame)), asserta(state(inMap)),
-        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)).
+        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), cetakPeta, 
+        chooseTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)).
 
 /* Start Game */
 start :-  write('Gotta catch them all!'),nl,nl,
@@ -26,15 +27,15 @@ start :-  write('Gotta catch them all!'),nl,nl,
           write('You can catch them all to get stronger, but what I am really interested in are the 2 legendary Tokemons, Icanmon dan Sangemon.') ,nl,
           write('If you can defeat or capture all those Tokemons I will not kill you.'),nl,nl,
           write('Available commands:'),nl,
-          write('start. 			--start the game!'),nl,
-          write('help. 				--show available commands'),nl,
-          write('quit. 				--quit the game'),nl,
-          write('w. a. s. d.		--mov'),nl,
-          write('emap. 				--look at the map'),nl, 
-          write('heal. 				--cure Tokemon in inventory if in gym center'),nl,
-          write('status. 			--show your status'),nl,
-          write('save(Filenama). 	--save your game'),nl,
-          write('load(Filenama). 	--load previously saved game'),nl,					
+          write('start. --start the game!'),nl,
+          write('help. --show available commands'),nl,
+          write('quit. --quit the game'),nl,
+          write('w. a. s. d. --mov'),nl,
+          write('emap. --look at the map'),nl, 
+          write('heal. --cure Tokemon in inventory if in gym center'),nl,
+          write('status. --show your status'),nl,
+          write('save(Filenama). --save your game'),nl,
+          write('load(Filenama). --load previously saved game'),nl,					
           write('Legends:'),nl,
           write('-X = Pagar'),nl,
           write('-P = Player'),nl,
@@ -67,7 +68,6 @@ heal :- state(inGame), write('You are not in the gym!'), nl.
 heal :- write('You are not in Game!'), nl.
 
 /* Pick Command */
-pick(Tokemon) :- nbInv(0), lose.
 pick(Tokemon) :- state(inBattle), inventory(Tokemon, Health), asserta(currTokemon(Tokemon, Health)), retract(inventory(Tokemon, Health)), 
                  nbInv(Sum), NewSum is (Sum - 1), retract(nbInv(Sum)), asserta(nbInv(NewSum)), battleStat.
 pick(Tokemon) :- state(inBattle), write('You don’t have that Tokemon!'), nl.
@@ -76,37 +76,37 @@ pick(Tokemon) :- write('You are not in Game!'), nl.
 
 /* Attack Command */
 attack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-          X = fire, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+          X = fire, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 attack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-          X = grass, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+          X = grass, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 attack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-          X = water, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+          X = water, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 attack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-          X = grass, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+          X = grass, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 attack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-          X = water, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+          X = water, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 attack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-          X = fire, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+          X = fire, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 attack :- state(inBattle), currTokemon(Tokemon, Health1), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), 
-          retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att), asserta(currEnemy(Enemy, NewHealth)).
+          retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 attack :- state(inGame), write('You are not in battle!'), nl.
 attack :- write('You are not in Game!'), nl.
 
 /* Special Attack Command */
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), spcAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-                 X = fire, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+                 X = fire, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), spcAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-                 X = grass, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+                 X = grass, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), spcAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-                 X = water, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+                 X = water, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), spcAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-                 X = grass, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+                 X = grass, Y = fire, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), spcAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-                 X = water, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+                 X = water, Y = grass, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1), type(Tokemon, X), spcAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
-                 X = fire, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)).
+                 X = fire, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att/2), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1), spcAtt(Tokemon, Att), currEnemy(Enemy, Health2), 
-                 retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att), asserta(currEnemy(Enemy, NewHealth)).
+                 retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att), asserta(currEnemy(Enemy, NewHealth)), battleEval1.
 specialAttack :- state(inGame), write('You are not in battle!'), nl.
 specialAttack :- write('You are not in Game!'), nl.
 
@@ -124,16 +124,28 @@ run :- write('You are not in Game!'), nl.
 
 /* Quit Command */
 quit :- forall(tokemonPos(X, Y, Z), retract(tokemonPos(X, Y, Z))), forall(state(X1), retract(state(X1))), forall(currTokemon(X2,Y2), retract(currTokemon(X2,Y2))),
-        forall(currEnemy(X3,Y3), retract(currEnemy(X3,Y3))), forall(inventory(X4, Y4), retract(inventory(X4, Y4))), forall(nbInv(X5), retract(nbInv(X5))).
+        forall(currEnemy(X3,Y3), retract(currEnemy(X3,Y3))), forall(inventory(X4, Y4), retract(inventory(X4, Y4))), forall(nbInv(X5), retract(nbInv(X5))), 
+        forall(playerloc(X6,Y6), retract(playerloc(X6,Y6))).
+
+/* Capture Command */
+capture :- nbInv(X), X == 6, write('Inventory Full! Drop one of your Tokemon sirst!'), nl.
+capture :- retract(currEnemy(Enemy, Health)), health(Enemy, X), asserta(inventory(Enemy, X)).
 
 /* Battle Phase */
 fight :- write('Choose your tokemon!'), nl, printAvailTokemon.
 battleStat :- nl, currEnemy(Enemy, Health1), type(enemy, X), write(Enemy), nl, write('Health : '), write(Health1), nl, write('Type : '), write(X), nl,
               nl, currTokemon(Tokemon, Health2), type(Tokemon, Y), write(Tokemon), nl, write('Health : '), write(Health2), nl, write('Type : '), write(Y), nl.
 
+battleEval1 :- currEnemy(Enemy, Health), Health > 0, battleStat, enemyAtkProc, write('Enemy attack!'), nl, battleEval2.
+battleEval1 :- write('Enemy fainted, do you want to capture ?'), nl, retract(state(inBattle)), asserta(state(inMap)).
+
+battleEval2 :- currTokemon(Tokemon, Health1), Health1 > 0, battleStat.
+battleEval2 :- nbInv(X), X > 0, write('Pick another Tokemon!'), nl, retract(currTokemon(Tokemon, Health)), printAvailTokemon.
+battleEval2 :- write('You Lose! Thanks for playing!'), nl, quit.
+
 /* Enemy Attack */
 enemyAtkProb(X) :- random(1, 5, X).
-//Special Attack//
+/* Special Attack */
 enemyAtk(X) :- X == 1, currEnemy(Enemy, Health1), type(Enemy, X1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = fire, Y1 = grass, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
@@ -152,24 +164,30 @@ enemyAtk(X) :- X == 1, currEnemy(Enemy, Health1), type(Enemy, X1), spcAtt(Enemy,
 enemyAtk(X) :- X == 1, currEnemy(Enemy, Health1), type(Enemy, X1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = fire, Y1 = water, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-//Normal Attack//
-enemyAtk(X) :- X /== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X == 1, currEnemy(Enemy, Health1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2), 
+               retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att), 
+               asserta(currTokemon(Tokemon, NewHealth)).
+/* Normal Attack */
+enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = fire, Y1 = grass, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X /== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = grass, Y1 = water, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X /== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = water, Y1 = fire, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X /== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = grass, Y1 = fire, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X /== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = water, Y1 = grass, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X /== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = fire, Y1 = water, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
- 
+enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2), 
+               retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att), 
+               asserta(currTokemon(Tokemon, NewHealth)). 
+
 enemyAtkProc :- enemyAtkProb(X), enemyAtk(X).
