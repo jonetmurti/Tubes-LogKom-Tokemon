@@ -1,3 +1,7 @@
+:- include('faktaPlayer.pl').
+:- include('map.pl').
+:- include('tokemon.pl').
+
 /* Move */
 
 w :- \+state(inGame),
@@ -47,3 +51,10 @@ d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
 
 d :- playerloc(X,Y),mapsize(Xmap,Ymap),X=Xmap,
      write('Anda berada di ujung timur').
+
+/* Location Check after every move */
+cekLoc :- playerloc(X, Y), gymLoc(X1, Y1), X == X1, Y == Y1, retract(state(_)), asserta(state(inGym)).
+cekLoc :- playerloc(X, Y), tokemonPos(Tokemon, X1, Y1), X == X1, Y == Y1, health(Tokemon, Health), 
+          retract(state(_)), asserta(state(inBattle)), asserta(currEnemy(Tokemon, Health)), 
+          write('A wild tokemon appears!'), nl, write('Fight or Run ?'), nl.
+cekLoc :- retract(state(_)), asserta(state(inMap)).

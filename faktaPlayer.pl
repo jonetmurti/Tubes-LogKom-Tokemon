@@ -1,7 +1,7 @@
-:- dynamic(playerloc/2).
-playerloc(1,1).
+/* Game State */
+:- dynamic(state/1).
 
-/*Tokemon pertama yang dimiliki player*/
-:- dynamic(firstTokemon/1).
+/* Player Location in Map */
+:- dynamic(playerloc/2).
 
 mapsize(10,10).
