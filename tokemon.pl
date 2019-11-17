@@ -1,5 +1,20 @@
 /* Tokemon DataBase */
+
+/* current player tokemon in battle (Tokemon, health) */
+:- dynamic(currTokemon/2).
+currTokemon :- write('You haven\'t choose your Tokemon').
+
+/* current enemy tokemon in battle (Tokemon, health) */ 
+:- dynamic(currEnemy/2).
+
+/* Tokemon Inventory */
+/* Inventory  (Tokemon, Health) */
+:- dynamic(inventory/2).
+/* nbInv  (number), number of tokemon in inventory */
+:- dynamic(nbInv/1).
+
 /* Legendary */
+
 nama(rahamon, legedary).
 nama(logkomon, legedary).
 nama(hizmon, legedary).
@@ -40,6 +55,7 @@ normalAtt(lemon, 20).
 normalAtt(kemon, 10).
 normalAtt(suketmon, 25).
 
+%spesial attact spcAtt/2
 spcAtt(rahamon, 70).
 spcAtt(logkomon, 90).
 spcAtt(hizmon, 80).
@@ -74,25 +90,12 @@ delTokemonPos :- forall(tokemonPos(Tokemon, X, Y), retract(tokemonPos(Tokemon, X
 
 updateTokemonPos :- delTokemonPos, initTokemon.
 
-/* current player tokemon in battle (Tokemon, health) */
-:- dynamic(currTokemon/2).
-currTokemon :- write('You haven\'t choose your Tokemon').
-
-/* current enemy tokemon in battle (Tokemon, health) */ 
-:- dynamic(currEnemy/2).
-
-/* Tokemon Inventory */
-/* Inventory  (Tokemon, Health) */
-:- dynamic(inventory/2).
-/* nbInv  (number), number of tokemon in inventory */
-:- dynamic(nbInv/1).
-
 /* Healing Tokemon in GYM */
 healTokemon :- forall(inventory(Tokemon, Health), procHeal(Tokemon, Health)).
 procHeal(Tokemon, Health) :- retract(inventory(Tokemon, Health)), health(Tokemon, X), assertz(inventory(Tokemon, X)).
 
 /* creating Tokemon inventory List */
-//invList :- 
+/*invList :-*/ 
 
 /* Print Available Tokemon */
 printAvailTokemon :- write('Available Tokemon : '), nl,

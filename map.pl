@@ -50,7 +50,7 @@ cetakBaris(X,B,Y) :-
     cetakBaris(X,B2,Y),!. 
 
 
-cetakPeta :-
+Map :-
     mapsize(X,Y),
     X2 is X + 2,
     cetakBorderH(X2),
