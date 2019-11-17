@@ -21,6 +21,7 @@ cetakField(A,X,B) :-
     \+playerloc(A,B),
     \+(A > X),
     \+(gymLoc(A,B)),
+    \+tokemonPos(_,A,B),
     write('-'),
     A2 is A + 1,
     cetakField(A2,X,B).
@@ -29,6 +30,13 @@ cetakField(A,X,B) :-
     \+(A > X),
     gymLoc(A,B),
     write('G'),
+    A2 is A + 1,
+    cetakField(A2,X,B).
+
+cetakField(A,X,B) :-
+    \+(A > X),
+    tokemonPos(_,A,B),
+    write('O'),
     A2 is A + 1,
     cetakField(A2,X,B).
 
@@ -52,7 +60,7 @@ cetakBaris(X,B,Y) :-
     cetakBaris(X,B2,Y),!. 
 
 
-Map :-
+cetakPeta :-
     mapsize(X,Y),
     X2 is X + 2,
     cetakBorderH(X2),

@@ -5,16 +5,16 @@
 :-include('map.pl').
 
 /* Initiation */
-chooseTokemon(Tokemon) :-repeat, write('Choose Your Tokemon : '), nl,
+chooseTokemon :-repeat, write('Choose Your Tokemon : '), nl,
 				        write('1. seamon'), nl,
 				        write('2. jonemon'), nl,
 				        write('3. lemon'), nl, 
-				        write('> '), read(X), startTokemon(X).
+				        write('> '), read(X), firstTokemon(X),health(X,Y),asserta(inventory(X,Y)).
                
 
 init :- asserta(state(inGame)), asserta(state(inMap)),
         asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), cetakPeta, 
-        chooseTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)).
+        chooseTokemon.
 
 /* Start Game */
 start :-  write('Gotta catch them all!'),nl,nl,
