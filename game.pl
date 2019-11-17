@@ -166,27 +166,27 @@ enemyAtk(X) :- X == 1, currEnemy(Enemy, Health1), type(Enemy, X1), spcAtt(Enemy,
                asserta(currTokemon(Tokemon, NewHealth)).
 enemyAtk(X) :- X == 1, currEnemy(Enemy, Health1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2), 
                retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att), 
-               asserta(currTokemon(Tokemon, NewHealth)).
-/* Normal Attack */
-enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+               asserta(currTokemon(Tokemon, NewHealth)). 
+/*Normal Attack*/
+enemyAtk(X) :- X =\= 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = fire, Y1 = grass, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X =\= 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = grass, Y1 = water, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X =\= 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = water, Y1 = fire, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X =\= 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = grass, Y1 = fire, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X =\= 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = water, Y1 = grass, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
+enemyAtk(X) :- X =\= 1, currEnemy(Enemy, Health1), type(Enemy, X1), normalAtt(Enemy, Att), currTokemon(Tokemon, Health2), type(Tokemon, Y1), 
                X1 = fire, Y1 = water, retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att/2), 
                asserta(currTokemon(Tokemon, NewHealth)).
-enemyAtk(X) :- X \== 1, currEnemy(Enemy, Health1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2), 
+enemyAtk(X) :- X =\= 1, currEnemy(Enemy, Health1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2), 
                retract(currTokemon(Tokemon, Health2)), NewHealth is (Health2 - Att), 
                asserta(currTokemon(Tokemon, NewHealth)). 
 
