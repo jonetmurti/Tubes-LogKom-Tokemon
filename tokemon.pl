@@ -1,64 +1,59 @@
 /* Tokemon DataBase */
 /* Legendary */
 nama(rahamon, legedary).
-health(rahamon, 1000).
-type(rahamon, fire).
-normalAtt(rahamon, 60).
-spcAtt(rahamon, 70).
-
 nama(logkomon, legedary).
-health(logkomon, 1000).
-type(logkomon, water).
-normalAtt(logkomon, 40).
-spcAtt(logkomon, 90).
-
 nama(hizmon, legedary).
-health(hizmon, 1000).
-type(hizmon, grass).
-normalAtt(hizmon, 50).
-spcAtt(hizmon, 80).
-
-/* Normal */
 nama(seamon, normal).
-health(seamon, 100).
-type(seamon, water).
-normalAtt(seamon, 20).
-spcAtt(seamon, 40).
-
-nama(jonemon, normal).
-health(jonemon, 190).
-type(jonemon, grass).
-normalAtt(jonemon, 15).
-spcAtt(jonemon, 25).
-
-nama(mamaLemon, normal).
-health(mamaLemon, 180).
-type(mamaLemon, water).
-normalAtt(mamaLemon, 15).
-spcAtt(mamaLemon, 30).
-
-nama(lemon, normal).
-health(lemon, 110).
-type(lemon, fire).
-normalAtt(lemon, 20).
-spcAtt(lemon, 35).
-
 nama(kemon, normal).
-health(kemon, 200).
-type(kemon, fire).
-normalAtt(kemon, 10).
-spcAtt(kemon, 30).
-
+nama(jonemon, normal).
+nama(mamaLemon, normal).
+nama(lemon, normal).
 nama(suketmon, normal).
+
+health(hizmon, 1000).
+health(logkomon, 1000).
+health(rahamon, 1000).
+health(seamon, 100).
+health(jonemon, 190).
+health(mamaLemon, 180).
+health(lemon, 110).
 health(suketmon, 125).
+health(kemon, 200).
+
+type(rahamon, fire).
+type(logkomon, water).
+type(hizmon, grass).
+type(seamon, water).
+type(jonemon, grass).
+type(mamaLemon, water).
+type(lemon, fire).
+type(kemon, fire).
 type(suketmon, grass).
+
+normalAtt(rahamon, 60).
+normalAtt(logkomon, 40).
+normalAtt(hizmon, 50).
+normalAtt(seamon, 20).
+normalAtt(jonemon, 15).
+normalAtt(mamaLemon, 15).
+normalAtt(lemon, 20).
+normalAtt(kemon, 10).
 normalAtt(suketmon, 25).
+
+spcAtt(rahamon, 70).
+spcAtt(logkomon, 90).
+spcAtt(hizmon, 80).
+spcAtt(seamon, 40).
+spcAtt(jonemon, 25).
+spcAtt(mamaLemon, 30).
+spcAtt(lemon, 35).
+spcAtt(kemon, 30).
 spcAtt(suketmon, 40).
 
 /* First Tokemon choose */
-startTokemon(seamon).
-startTokemon(jonemon).
-startTokemon(lemon).
+firstTokemon(seamon).
+firstTokemon(jonemon).
+firstTokemon(lemon).
 
 /* Tokemon Position in Map(changing over time) */
 :- dynamic(tokemonPos/3).

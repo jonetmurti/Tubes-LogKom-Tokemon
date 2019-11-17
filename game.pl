@@ -11,11 +11,11 @@
 randomTokemonPos(X, Y, Xlist, Ylist) :- repeat, random(0, 10, X), random(0, 10, Y), isMember(X, Xlist, ExistX), isMember(Y, Ylist, ExistY), ExistX == 0, ExistY == 0.
 
 /* Initiation */
-chooseTokemon :-repeat, write('Choose Your Tokemon : '), nl,
+chooseTokemon(X) :-repeat, write('Choose Your Tokemon : '), nl,
 				   write('1. seamon'), nl,
 				   write('2. jonemon'), nl,
 				   write('3. lemon'), nl, 
-				   write('> '), read(X), startTokemon(X), asserta(firstTokenmon).
+				   write('> '), read(X), firstTokemon(X).
 
 
 initTokemon :- X1List = [], Y1List = [], randomTokemonPos(X1, Y1, X1List, Y1List), asserta(tokemonPos(seamon, X1, Y1)), sambung(X1List, X1, X2List), sambung(Y1List, Y1, Y2List),
@@ -29,7 +29,7 @@ initTokemon :- X1List = [], Y1List = [], randomTokemonPos(X1, Y1, X1List, Y1List
                randomTokemonPos(X9, Y9, X9List, Y9List), asserta(tokemonPos(hizmon, X9, Y9)).
                
 
-init :- chooseTokemon, firstTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)), asserta(state(inGame)), asserta(state(inMap)),
+init :- chooseTokemon(Tokemon), health(Tokemon, X), asserta(inventory(Tokemon, X)), asserta(state(inGame)), asserta(state(inMap)),
         asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)).
 
 /* Start Game */
@@ -146,5 +146,8 @@ battleQuestion :- write('A wild tokemon appears!'), nl, write('Fight or Run ?'),
 fight :- write('Choose your tokemon!'), nl, printAvailTokemon.
 battleStat :- nl, currEnemy(Enemy, Health1), type(enemy, X), write(Enemy), nl, write('Health : '), write(Health1), nl, write('Type : '), write(X), nl,
               nl, currTokemon(Tokemon, Health2), type(Tokemon, Y), write(Tokemon), nl, write('Health : '), write(Health2), nl, write('Type : '), write(Y), nl.
+
+/*Available Tokemon*/
+printAvailTokemon :- write('test'),nl.
 
 /* Enemy Attack */
