@@ -60,8 +60,24 @@ firstTokemon(seamon).
 firstTokemon(jonemon).
 firstTokemon(lemon).
 
+/* Randomize tokemon position in map */
+randomTokemonPos(X, Y, Xlist, Ylist) :- repeat, random(0, 10, X), random(0, 10, Y), isMember(X, Xlist, ExistX), isMember(Y, Xlist, ExistY), ExistX == 0, ExistY == 0.
+
 /* Tokemon Position in Map(changing over time) */
 :- dynamic(tokemonPos/3).
+initTokemon :- random(0, 10, X1), random(0, 10, Y1), asserta(tokemonPos(rahamon, X1, Y1)),
+               random(0, 10, X2), random(0, 10, Y2), asserta(tokemonPos(logkomon, X2, Y2)),
+               random(0, 10, X3), random(0, 10, Y3), asserta(tokemonPos(hizmon, X3, Y3)),
+               random(0, 10, X4), random(0, 10, Y4), asserta(tokemonPos(seamon, X4, Y4)),
+               random(0, 10, X5), random(0, 10, Y5), asserta(tokemonPos(jonemon, X5, Y5)),
+               random(0, 10, X6), random(0, 10, Y6), asserta(tokemonPos(mamaLemon, X6, Y6)),
+               random(0, 10, X7), random(0, 10, Y7), asserta(tokemonPos(lemon, X7, Y7)),
+               random(0, 10, X8), random(0, 10, Y8), asserta(tokemonPos(kemon, X8, Y8)),
+               random(0, 10, X9), random(0, 10, Y9), asserta(tokemonPos(suketmon, X9, Y9)).
+
+delTokemonPos :- forall(tokemonPos(Tokemon, X, Y), retract(tokemonPos(Tokemon, X, Y))).
+
+updateTokemonPos :- delTokemonPos, initTokemon.
 
 /* current player tokemon in battle (Tokemon, health) */
 :- dynamic(currTokemon/2).
@@ -82,3 +98,8 @@ procHeal(Tokemon, Health) :- retract(inventory(Tokemon, Health)), health(Tokemon
 
 /* creating Tokemon inventory List */
 //invList :- 
+
+/* Print Available Tokemon */
+printAvailTokemon :- write('Available Tokemon : '), nl,
+                     forall(inventory(Tokemon, Health), printTokemonName(Tokemon)).
+printTokemonName(Tokemon) :- write('- '), write(Tokemon), nl.
