@@ -56,5 +56,7 @@ d :- playerloc(X,Y),mapsize(Xmap,Ymap),X=Xmap, cetakPeta,
 cekLoc :- playerloc(X, Y), gymLoc(X1, Y1), X == X1, Y == Y1, retract(state(_)), asserta(state(inGym)).
 cekLoc :- playerloc(X, Y), tokemonPos(Tokemon, X1, Y1), X == X1, Y == Y1, health(Tokemon, Health), 
           retract(state(_)), asserta(state(inBattle)), retract(currEnemy(_,_)), asserta(currEnemy(Tokemon, Health)), 
-          write('A wild tokemon appears!'), nl, write('Fight or Run ?'), nl.
+          write('A wild tokemon appears!'), nl, write('Tokemon : '), write(Tokemon), nl, 
+          write('Type : '), type(Tokemon, Type), write(Type), nl, 
+          write('Health : '), write(Health), nl, nl, write('Fight or Run ?'), nl.
 cekLoc :- retract(state(_)), asserta(state(inMap)).
