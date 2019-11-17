@@ -1,3 +1,5 @@
+:-include('faktaPlayer.pl').
+
 gymLoc(4,4).
 
 cetakBorderH(0) :- nl,!.
