@@ -121,7 +121,7 @@ specialAttack :- state(inGame), write('You are not in battle!'), nl.
 specialAttack :- write('You are not in Game!'), nl.
 
 /* Drop Command */
-drop(Tokemon) :- inventory(Tokemon, Health), retract(inventory(Tokemon, Health)), retract(nbInv(Sum)), NewSum is Sum - 1, asserta(nbInv(NewSum)).
+drop(Tokemon) :- inventory(Tokemon, Health), retract(inventory(Tokemon, Health)), retract(nbInv(Sum)), NewSum is Sum - 1, asserta(nbInv(NewSum)),nl,write('You release '),write(Tokemon),write(' into the wild'),nl,!.
 drop(Tokemon) :- state(inGame), write('You don\'t have that Tokemon!'), nl.
 drop(Tokemon) :- write('You are not in Game!'), nl.
 
