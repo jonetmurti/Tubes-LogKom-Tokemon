@@ -3,6 +3,7 @@
 :-include('primitif.pl').
 :-include('move.pl').
 :-include('map.pl').
+:-include('loadsave.pl').
 
 /* Initiation */
 chooseTokemon :-repeat, write('Choose Your Tokemon : (Write the name of the Tokemon)'), nl,
