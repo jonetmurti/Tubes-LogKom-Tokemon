@@ -46,21 +46,22 @@ start :-  write('Gotta catch them all!'),nl,nl,
 
 /* Help command */
 help :- write('Help :'), nl, nl,
-		write('Available Commands : '), nl,
-        write('Start --start the game!'), nl, 
-        write('Help --show available commands'), nl,
-        write('Quit --quit the game'), nl, 
-        write('Move : w(North), a(West), s(South), d(East)'), nl,
-        write('Map'), nl,
-        write('Heal --cure Tokemon in inventory if in gym center'), nl,
-        write('Status --show your status'), nl,
-        write('Pick(Tokemon) --Capture the Tokemon and store it in your inventory'), nl,
-        write('Attack --use only in battle mode'), nl,
-        write('SpecialAttack --use only in battle mode'), nl,
-        write('Run --When Tokemon appears, you will not fight them'), nl, 
-        write('Drop(Tokemon). --Free your Tokemon from inventory'), nl,
-        write('save(Filenama). --save your game'),nl,
-        write('load(Filenama). --load previously saved game').
+	write('Available Commands : '), nl,
+        write('start 		--start the game!'), nl, 
+        write('help 		--show available commands'), nl,
+        write('quit 		--quit the game'), nl, 
+        write('move : w(North), a(West), s(South), d(East)'), nl,
+        write('map		--show current map'), nl,
+        write('heal 		--cure Tokemon in inventory if in gym center'), nl,
+        write('status 		--show your status'), nl,
+        write('pick(Tokemon) 	--Capture the Tokemon and store it in your inventory'), nl,
+        write('attack 		--use only in battle mode'), nl,
+        write('specialAttack 	--use only in battle mode'), nl,
+        write('run 		--When Tokemon appears, you will not fight them'), nl, 
+        write('drop(Tokemon). 	--Free your Tokemon from inventory'), nl,
+        write('save(Filenama).	--save your game'),nl,
+        write('load(Filenama). 	--load previously saved game'),nl,
+        write('setiap perintah harus diakhiri titik (.)'),nl.
 
 /* Heal Command */
 heal :- state(inGym), alreadyHeal(0), retract(alreadyHeal(0)), asserta(alreadyHeal(1)), healTokemon.
