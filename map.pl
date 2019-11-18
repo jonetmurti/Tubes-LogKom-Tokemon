@@ -83,3 +83,5 @@ cetakPeta :-
     cetakBorderH(X2),
     cetakBaris(X,1,Y),
     cetakBorderH(X2),!.
+
+map :- cetakPeta.

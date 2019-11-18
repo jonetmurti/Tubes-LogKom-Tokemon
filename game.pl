@@ -28,15 +28,16 @@ start :-
         write('Do not worry, we already prepare a Tokemon that will help you get rid of those wild Tokemon.'),nl,
         write('Now, please choose the Tokemon you like, and good luck!'),nl,nl,
         write('Available commands:'),nl,
-        write('start. --start the game!'),nl,
-        write('help. --show available commands'),nl,
-        write('quit. --quit the game'),nl,
-        write('w. a. s. d. --mov'),nl,
-        write('map. --look at the map'),nl, 
-        write('heal. --cure Tokemon in inventory if in gym center'),nl,
-        write('status. --show your status'),nl,
-        write('save(Filenama). --save your game'),nl,
-        write('load(Filenama). --load previously saved game'),nl,					
+        write('start            --start the game!'), nl, 
+        write('help             --show available commands'), nl,
+        write('quit             --quit the game'), nl, 
+        write('w, a, s, d       --mov'),nl,
+        write('map              --show current map'), nl,
+        write('heal             --cure Tokemon in inventory if in gym center'), nl,
+        write('status           --show your status'), nl,
+        write('save(Filenama)   --save your game'),nl,
+        write('load(Filenama)   --load previously saved game'),nl,
+	write('Note: setiap perintah harus diakhiri titik (.)'),nl.					
         init.
 start :- state(_), write('Anda sudah berada didalam game.'),!.
 
