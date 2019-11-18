@@ -13,7 +13,7 @@ chooseTokemon :-repeat, write('Choose Your Tokemon : (Write the name of the Toke
                
 
 init :- asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), asserta(nLegend(3)),
-        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon,nl, cetakPeta, 
+        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon,nl, cetakPeta,  
         !.
 
 /* Start Game */
@@ -37,7 +37,7 @@ start :-
         write('status           --show your status'), nl,
         write('save(Filenama)   --save your game'),nl,
         write('load(Filenama)   --load previously saved game'),nl,
-	write('Note: setiap perintah harus diakhiri titik (.)'),nl.					
+	write('Note: setiap perintah harus diakhiri titik (.)'),nl,					
         init.
 start :- state(_), write('Anda sudah berada didalam game.'),!.
 
@@ -69,11 +69,11 @@ heal :- state(inGame), write('You are not in the gym!'), nl.
 heal :- write('You are not in Game!'), nl.
 
 /* Pick Command */
+pick(Tokemon) :- state(inBattle), \+inventory(Tokemon,_), write('You don’t have that Tokemon!'), nl,!.
 pick(Tokemon) :- state(inBattle), inventory(Tokemon, Health), asserta(currTokemon(Tokemon, Health, 1)), retract(inventory(Tokemon, Health)), 
-                 nbInv(Sum), NewSum is (Sum - 1), retract(nbInv(Sum)), asserta(nbInv(NewSum)), battleStat.
-pick(Tokemon) :- state(inBattle), write('You don’t have that Tokemon!'), nl.
-pick(Tokemon) :- state(inGame), write('You are not in Battle!'), nl.
-pick(Tokemon) :- write('You are not in Game!'), nl.
+                 nbInv(Sum), NewSum is (Sum - 1), retract(nbInv(Sum)), asserta(nbInv(NewSum)), battleStat,!.
+pick(Tokemon) :- state(inGame), write('You are not in Battle!'), nl,!.
+pick(Tokemon) :- write('You are not in Game!'), nl,!.
 
 /* Attack Command */
 attack :- state(inBattle), currTokemon(Tokemon, Health1, Spc), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
@@ -141,7 +141,7 @@ capture :- nbInv(X), X == 6, write('Inventory Full! Drop one of your Tokemon fir
 capture :- retract(currEnemy(Enemy, Health)), health(Enemy, X), asserta(inventory(Enemy, X)).
 
 /* Battle Phase */
-fight :- write('Choose your tokemon! (Write pick(name_of_tokemon)'), nl, printAvailTokemon,nl,write('>').
+fight :- write('Choose your tokemon! (Write pick(name_of_tokemon)'), nl, printAvailTokemon,nl,!.
 battleStat :- nl, currEnemy(Enemy, Health1), type(enemy, X), write(Enemy), nl, write('Health : '), write(Health1), nl, write('Type : '), write(X), nl,
               nl, currTokemon(Tokemon, Health2, Spc), type(Tokemon, Y), write(Tokemon), nl, write('Health : '), write(Health2), nl, write('Type : '), write(Y), nl.
 
