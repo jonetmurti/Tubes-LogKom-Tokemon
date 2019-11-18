@@ -129,15 +129,19 @@ drop(Tokemon) :- write('You are not in Game!'), nl, !.
 runProb(X) :- random(1, 7, X), !.
 run :- state(inFight), write('You are in the middle of a fight!'), nl, !.
 run :- state(inBattle), runProb(X), X == 3, write('You failed to run'), nl, fight, !.
-run :- state(inBattle), retract(currEnemy(X, Y)), retract(state(inBattle)), asserta(state(inMap)), write('You sucessfully escaped the Tokemon!'), nl, !.
+run :- state(inBattle), getTokemonBack,retract(currEnemy(X, Y)), retract(state(inBattle)), asserta(state(inMap)), write('You sucessfully escaped the Tokemon!'), nl, !.
 run :- state(inGame), write('You are not in battle!'), nl,!.
 run :- write('You are not in Game!'), nl, !.
+
+getTokemonBack :- \+currTokemon(_,_,_).
+getTokemonBack :- currTokemon(X,Y,_), nbInv(N), NewN is N + 1, retract(nbInv(N)), asserta(nbInv(NewN)),
+                  asserta(inventory(X,Y)),retract(currTokemon(X,Y,_)).
 
 /* Quit Command */
 quit :- state(inMenu), write('You are not in a game!'), nl, !.
 quit :- forall(tokemonPos(X, Y, Z), retract(tokemonPos(X, Y, Z))), forall(state(X1), retract(state(X1))), forall(currTokemon(X2,Y2,Z2), retract(currTokemon(X2,Y2,Z2))),
         forall(currEnemy(X3,Y3), retract(currEnemy(X3,Y3))), forall(inventory(X4, Y4), retract(inventory(X4, Y4))), forall(nbInv(X5), retract(nbInv(X5))), 
-        forall(playerloc(X6,Y6), retract(playerloc(X6,Y6))), forall(alreadyHeal(X7), retract(alreadyHeal(X7))), forall(nLegend(X8), retract(nLegend(X8))),nl,
+        forall(playerloc(X6,Y6), retract(playerloc(X6,Y6))), forall(alreadyHeal(X7), retract(alreadyHeal(X7))), forall(nLegend(X8), retract(nLegend(X8))),nl, asserta(state(inMenu)),
         write('So you prefer to run away, huh?').
 
 /* Capture Command */
@@ -155,11 +159,11 @@ battleEval1 :- currEnemy(Enemy, Health), nama(Enemy, Type), Type = legendary, nL
 battleEval1 :- currEnemy(Enemy, Health), nama(Enemy, Type), Type = legendary, nLegend(N), NewN is N - 1, retract(nLegend(N)), asserta(nLegend(NewN)),
                write(Enemy), write(' fainted, you beat one legendary Tokemon!! do you want to capture ?'), nl, 
                retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), asserta(inventory(Tokemon, Health1)), asserta(currCapture(Enemy)),
-               retract(state(inBattle)), retract(state(inFight)), asserta(state(inMap)), retract(nbInv(Sum)), NewSum is Sum + 1, asserta(nbInv(NewSum)),
+               retract(state(inBattle)), runChecker, asserta(state(inMap)), retract(nbInv(Sum)), NewSum is Sum + 1, asserta(nbInv(NewSum)),
                retract(currEnemy(_,_)), !.
 battleEval1 :- currEnemy(Enemy, Health), write(Enemy), write(' fainted, do you want to capture ?'), nl, 
                retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), asserta(inventory(Tokemon, Health1)), asserta(currCapture(Enemy)),
-               retract(state(inBattle)), retract(state(inFight)), asserta(state(inMap)), retract(nbInv(Sum)), NewSum is Sum + 1, asserta(nbInv(NewSum)),
+               retract(state(inBattle)), runChecker, asserta(state(inMap)), retract(nbInv(Sum)), NewSum is Sum + 1, asserta(nbInv(NewSum)),
                retract(currEnemy(_,_)), !.
 
 battleEval2 :- currTokemon(Tokemon, Health1, Spc), Health1 > 0, battleStat, runChecker, write('You can run by typing run.'), nl, !.
