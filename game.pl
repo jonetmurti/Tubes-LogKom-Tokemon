@@ -13,8 +13,8 @@ chooseTokemon :-repeat, write('Choose Your Tokemon : (Write the name of the Toke
                
 
 init :- asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), asserta(nLegend(3)),
-        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), cetakPeta, 
-        chooseTokemon,!.
+        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon,nl, cetakPeta, 
+        !.
 
 /* Start Game */
 start :-  
@@ -152,7 +152,7 @@ battleEval1 :- currEnemy(Enemy, Health), nama(Enemy, Type), Type = legendary, nL
                retract(state(inBattle)), asserta(state(inMap)),
                retract(currEnemy(_,_)).
 battleEval1 :- currEnemy(Enemy, Health), write(Enemy), write(' fainted, do you want to capture ?'), nl, 
-               retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), asserta(inventory(Tokemon, Health1)),
+               retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), retract(inventory(Tokemon,_)),asserta(inventory(Tokemon, Health1)),
                retract(state(inBattle)), asserta(state(inMap)),
                retract(currEnemy(_,_)).
 
