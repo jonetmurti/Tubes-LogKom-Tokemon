@@ -18,8 +18,8 @@ init :- asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), 
 
 /* Start Game */
 start :-  
-        write('Ah, Trainer, you finally come,'),nl,
-        write('Welcome to Labo Fennef City. My name is Faris, and I am the Mayor of the City'),nl,
+        write('Ah, hello there Trainer, Welcome to Labo Fennef City. '),nl,
+        write('My name is Faris, I am the Mayor of the City'),nl,
         write('As you may already know, some wild Tokemon has been causing disturbance around the city.'), nl,
         write('They are led by three legendary Tokemon'),nl,
         write('Those tree are Rahamon, Logkomon, and Hizmon.'),nl,
