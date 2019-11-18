@@ -58,9 +58,9 @@ health(jonemon, 190).
 health(mamaLemon, 180).
 health(lemon, 110).
 health(suketmon, 125).
-health(kemon, 200).
-health(alphamon, normal).
-health(betamon, normal).
+health(kemon, 120).
+health(alphamon, 150).
+health(betamon, 110).
 health(gammamon, 200).
 health(deltamon, 200).
 health(epsilonmon, 200).
