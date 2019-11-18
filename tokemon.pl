@@ -177,15 +177,6 @@ pagarmon(U,V,X,Y) :- random(1, 11, X1), random(1, 11, Y1),pagarmon(X1,Y1,X,Y).
 
 /* Tokemon Position in Map(changing over time) */
 :- dynamic(tokemonPos/3).
-/*initTokemon :- random(1, 11, X1), random(1, 11, Y1), pagarmon(X1,Y1,X1n,Y1n), asserta(tokemonPos(rahamon, X1n, Y1n)),
-               random(1, 11, X2), random(1, 11, Y2), pagarmon(X2,Y2,X2n,Y2n), asserta(tokemonPos(logkomon, X2n, Y2n)),
-               random(1, 11, X3), random(1, 11, Y3), pagarmon(X3,Y3,X3n,Y3n), asserta(tokemonPos(hizmon, X3n, Y3n)),
-               random(1, 11, X4), random(1, 11, Y4), pagarmon(X4,Y4,X4n,Y4n), asserta(tokemonPos(seamon, X4n, Y4n)),
-               random(1, 11, X5), random(1, 11, Y5), pagarmon(X5,Y5,X5n,Y5n), asserta(tokemonPos(jonemon, X5n, Y5n)),
-               random(1, 11, X6), random(1, 11, Y6), pagarmon(X6,Y6,X6n,Y6n), asserta(tokemonPos(mamaLemon, X6n, Y6n)),
-               random(1, 11, X7), random(1, 11, Y7), pagarmon(X7,Y7,X7n,Y7n), asserta(tokemonPos(lemon, X7n, Y7n)),
-               random(1, 11, X8), random(1, 11, Y8), pagarmon(X8,Y8,X8n,Y8n), asserta(tokemonPos(kemon, X8n, Y8n)),
-               random(1, 11, X9), random(1, 11, Y9), pagarmon(X9,Y9,X9n,Y9n), asserta(tokemonPos(suketmon, X9n, Y9n)).*/
 
 initTokemon :- random(1, 11, X1), random(1, 11, Y1), asserta(tokemonPos(rahamon, X1, Y1)),
                random(1, 11, X2), random(1, 11, Y2), asserta(tokemonPos(logkomon, X2, Y2)),
@@ -195,7 +186,25 @@ initTokemon :- random(1, 11, X1), random(1, 11, Y1), asserta(tokemonPos(rahamon,
                random(1, 11, X6), random(1, 11, Y6), asserta(tokemonPos(mamaLemon, X6, Y6)),
                random(1, 11, X7), random(1, 11, Y7), asserta(tokemonPos(lemon, X7, Y7)),
                random(1, 11, X8), random(1, 11, Y8), asserta(tokemonPos(kemon, X8, Y8)),
-               random(1, 11, X9), random(1, 11, Y9), asserta(tokemonPos(suketmon, X9, Y9)).
+               random(1, 11, X9), random(1, 11, Y9), asserta(tokemonPos(suketmon, X9, Y9)),
+               random(1, 11, X10), random(1, 11, Y10), asserta(tokemonPos(alphamon, X10, Y10)),
+			         random(1, 11, X11), random(1, 11, Y11), asserta(tokemonPos(betamon, X11, Y11)),
+			         random(1, 11, X12), random(1, 11, Y12), asserta(tokemonPos(gammamon, X12, Y12)),
+			         random(1, 11, X13), random(1, 11, Y13), asserta(tokemonPos(deltamon, X13, Y13)),
+			         random(1, 11, X14), random(1, 11, Y14), asserta(tokemonPos(epsilonmon, X14, Y14)),
+			         random(1, 11, X15), random(1, 11, Y15), asserta(tokemonPos(lambdamon, X15, Y15)),
+			         random(1, 11, X16), random(1, 11, Y16), asserta(tokemonPos(pimon, X16, Y16)),
+			         random(1, 11, X17), random(1, 11, Y17), asserta(tokemonPos(thetamon, X17, Y17)),
+               random(1, 11, X18), random(1, 11, Y18), asserta(tokemonPos(sigmamon, X18, Y18)),
+               random(1, 11, X19), random(1, 11, Y19), asserta(tokemonPos(omegamon, X19, Y19)),
+               random(1, 11, X20), random(1, 11, Y20), asserta(tokemonPos(rhomon, X20, Y20)),
+               random(1, 11, X21), random(1, 11, Y21), asserta(tokemonPos(psimon, X21, Y21)),
+               random(1, 11, X22), random(1, 11, Y22), asserta(tokemonPos(zetamon, X22, Y22)),
+               random(1, 11, X23), random(1, 11, Y23), asserta(tokemonPos(etamon, X23, Y23)),
+               random(1, 11, X24), random(1, 11, Y24), asserta(tokemonPos(kapamon, X24, Y24)),
+               random(1, 11, X25), random(1, 11, Y25), asserta(tokemonPos(ximon, X25, Y25)),
+               random(1, 11, X26), random(1, 11, Y26), asserta(tokemonPos(taumon, X26, Y26)),
+               random(1, 11, X27), random(1, 11, Y27), asserta(tokemonPos(chimon, X27,Y27)).
 
 updateTokemonPos :- forall(tokemonPos(Tokemon, X, Y), updatePos(Tokemon, X, Y)).
 updatePos(Tokemon, X, Y) :- retract(tokemonPos(Tokemon, X, Y)), random(1, 11, X1), random(1, 11, Y1), assertz(tokemonPos(Tokemon, X1, Y1)).
