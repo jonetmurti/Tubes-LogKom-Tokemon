@@ -162,10 +162,11 @@ battleEval1 :- currEnemy(Enemy, Health), write(Enemy), write(' fainted, do you w
                retract(state(inBattle)), retract(state(inFight)), asserta(state(inMap)), retract(nbInv(Sum)), NewSum is Sum + 1, asserta(nbInv(NewSum)),
                retract(currEnemy(_,_)), !.
 
-battleEval2 :- currTokemon(Tokemon, Health1, Spc), Health1 > 0, battleStat, !.
+battleEval2 :- currTokemon(Tokemon, Health1, Spc), Health1 > 0, battleStat, runChecker, write('You can run by typing run.'), nl, !.
 battleEval2 :- nbInv(X), X > 0, write('Pick another Tokemon!'), nl, retract(currTokemon(Tokemon, Health, Spc)), printAvailTokemon, !.
 battleEval2 :- write('You Lose! Thanks for playing!'), nl, quit, !.
-
+runChecker :- state(inFight), retract(state(inFight)).
+runChecker :- \+state(inFight).
 
 /* Enemy Attack */
 /*
