@@ -37,8 +37,6 @@ cetakField(A,X,B) :-
     A2 is A + 1,
     cetakField(A2,X,B).
 
-map : cetakPeta.
-
 cetakField(A,X,B) :-
     \+(A > X),
     \+playerloc(A,B),
