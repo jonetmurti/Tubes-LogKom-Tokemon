@@ -59,7 +59,7 @@ cetakField(A,X,B) :-
     playerloc(A,B),
     write('P'),
     A2 is A + 1,
-    cetakField(A2,X,B).
+cetakField(A2,X,B).
 
 cetakBaris(_,B,Y) :- 
     B>Y, !.
