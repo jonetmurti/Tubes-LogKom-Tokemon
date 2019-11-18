@@ -17,7 +17,7 @@ init :- asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), 
         !.
 
 /* Start Game */
-start :- start :- state(_), write('Anda sudah berada didalam game.'),!.
+start :- state(_), write('Anda sudah berada didalam game.'),!.
 start :-  
         write('Ah, hello there Trainer, Welcome to Labo Fennef City. '),nl,
         write('My name is Faris, I am the Mayor of the City'),nl,
@@ -69,9 +69,9 @@ heal :- state(inGame), write('You are not in the gym!'), nl.
 heal :- write('You are not in Game!'), nl.
 
 /* Pick Command */
-pick(Tokemon) :- state(inBattle), \+inventory(Tokemon,_), write('You don’t have that Tokemon!'), nl,!.
 pick(Tokemon) :- state(inBattle), inventory(Tokemon, Health), asserta(currTokemon(Tokemon, Health, 1)), retract(inventory(Tokemon, Health)), 
                  nbInv(Sum), NewSum is (Sum - 1), retract(nbInv(Sum)), asserta(nbInv(NewSum)), battleStat,!.
+pick(Tokemon) :- state(inBattle), write('You don’t have that Tokemon!'), nl,!.
 pick(Tokemon) :- state(inGame), write('You are not in Battle!'), nl,!.
 pick(Tokemon) :- write('You are not in Game!'), nl,!.
 
@@ -142,7 +142,7 @@ capture :- retract(currCapture(Enemy)), health(Enemy, X), asserta(inventory(Enem
 
 /* Battle Phase */
 fight :- write('Choose your tokemon! (Write pick(name_of_tokemon)'), nl, printAvailTokemon,nl,!.
-battleStat :- nl, currEnemy(Enemy, Health1), type(enemy, X), write(Enemy), nl, write('Health : '), write(Health1), nl, write('Type : '), write(X), nl,
+battleStat :- nl, currEnemy(Enemy, Health1), type(Enemy, X), write(Enemy), nl, write('Health : '), write(Health1), nl, write('Type : '), write(X), nl,
               nl, currTokemon(Tokemon, Health2, Spc), type(Tokemon, Y), write(Tokemon), nl, write('Health : '), write(Health2), nl, write('Type : '), write(Y), nl.
 
 battleEval1 :- currEnemy(Enemy, Health), Health > 0, battleStat, enemyAtkProc, write('Enemy attack!'), nl, battleEval2.
@@ -162,7 +162,7 @@ battleEval2 :- nbInv(X), X > 0, write('Pick another Tokemon!'), nl, retract(curr
 battleEval2 :- write('You Lose! Thanks for playing!'), nl, quit.
 
 /* Enemy Attack */
-enemyAtkProb(X) :- random(1, 5, X).
+enemyAtkProb(X) :- random(1, 11, X).
 /* Special Attack */
 enemyAtk(X) :- X == 1, currEnemy(Enemy, Health1), type(Enemy, X1), spcAtt(Enemy, Att), currTokemon(Tokemon, Health2, Spc), type(Tokemon, Y1), 
                X1 = fire, Y1 = grass, retract(currTokemon(Tokemon, Health2, Spc)), NewHealth is (Health2 - Att - Att//2), 
