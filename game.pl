@@ -38,7 +38,7 @@ start :-
         write('save(Filenama)   --save your game'),nl,
         write('load(Filenama)   --load previously saved game'),nl,
 	write('Note: setiap perintah harus diakhiri titik (.)'),nl,					
-        init.
+        init,!.
 start :- state(_), write('Anda sudah berada didalam game.'),!.
 
 /* COMMAND : */
