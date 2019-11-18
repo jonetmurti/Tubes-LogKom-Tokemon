@@ -9,6 +9,10 @@ w :- \+state(_),
 w :- state(inBattle), write('You cannot move in battle!'), nl.
 w :- playerloc(X,Y),\+(Y=1),
      YNew is Y - 1,
+     pagar(X,YNew),
+     write('Ada pagar coy.'), nl,!.
+w :- playerloc(X,Y),\+(Y=1),
+     YNew is Y - 1,
      retract(playerloc(X,Y)),
      asserta(playerloc(X,YNew)), cetakPeta,
      write('Anda bergerak ke utara.'), nl, updateTokemonPos, cekLoc,!.
@@ -19,6 +23,10 @@ w :- playerloc(_,Y),Y=1, cetakPeta,
 a :- \+state(_),
      write('Anda belum memulai game!!'), nl,!.
 a :- state(inBattle), write('You cannot move in battle!'), nl,!.
+a :- playerloc(X,Y),\+(X=1),
+     XNew is X - 1,
+     pagar(XNew,Y),
+     write('Gaboleh lompat pagar yaaa.'), nl,!.
 a :- playerloc(X,Y),\+(X=1),
      XNew is X - 1,
      retract(playerloc(X,Y)),
@@ -33,6 +41,10 @@ s :- \+state(_),
 s :- state(inBattle), write('You cannot move in battle!'), nl,!.
 s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y<Ymap,
      YNew is Y + 1,
+     pagar(X,YNew),
+     write('Ada pagar lhoo.'), nl,!.
+s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y<Ymap,
+     YNew is Y + 1,
      retract(playerloc(X,Y)),
      asserta(playerloc(X,YNew)), cetakPeta,
      write('Anda bergerak ke selatan.'), nl, updateTokemonPos, cekLoc,!.
@@ -43,6 +55,10 @@ s :- playerloc(X,Y),mapsize(Xmap,Ymap),Y=Ymap, cetakPeta,
 d :- \+state(_),
      write('Anda belum memulai game!!'), nl,!.
 d :- state(inBattle), write('You cannot move in battle!'), nl,!.
+d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
+     XNew is X + 1,
+     pagar(XNew,Y),
+     write('Anda bergerak ke timur.'), nl,!.
 d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
      XNew is X + 1,
      retract(playerloc(X,Y)),
