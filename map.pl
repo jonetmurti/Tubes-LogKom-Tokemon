@@ -25,7 +25,7 @@ cetakBorder :-
     write('X'),!.
 
 
-cetakField(A,X,B) :-
+cetakField(A,X,_) :-
     A>X, !.
 
 cetakField(A,X,B) :-
@@ -81,6 +81,11 @@ cetakBaris(X,B,Y) :-
 
 
 cetakPeta :-
+    write('Legends:'),nl,
+    write('-X = Pagar'),nl,
+    write('-P = Player'),nl,
+    write('-G = Gym'),nl,
+    write('-O = Tokemon'),nl,
     mapsize(X,Y),
     X2 is X + 2,
     cetakBorderH(X2),
