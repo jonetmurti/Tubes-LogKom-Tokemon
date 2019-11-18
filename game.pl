@@ -62,6 +62,18 @@ help :- write('Help :'), nl, nl,
         write('save(Filenama). --save your game'),nl,
         write('load(Filenama). --load previously saved game').
 
+gameloop :- read(X),lakukan(X),\+state(_).
+
+lakukan(X) :- X==Start,write('Anda sedang berada dalam game.').
+lakukan(X) :- X==Help,help.
+lakukan(X) :- X==Quit,retract(state(_)).
+lakukan(X) :- X==Map,cetakPeta.
+lakukan(X) :- X==Heal,heal.
+lakukan(X) :- X==Status,status.
+lakukan(X) :- pick(_).
+lakukan(_) :- write('Command Tidak tersedia').
+
+
 /* Heal Command */
 heal :- state(inGym), healTokemon.
 heal :- state(inGame), write('You are not in the gym!'), nl.
