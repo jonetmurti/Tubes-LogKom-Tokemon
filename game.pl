@@ -143,6 +143,7 @@ quit :- forall(tokemonPos(X, Y, Z), retract(tokemonPos(X, Y, Z))), forall(state(
 /* Capture Command */
 capture :- nbInv(X), X == 6, write('Inventory Full! Drop one of your Tokemon first!'), nl, !.
 capture :- retract(currCapture(Enemy)), health(Enemy, X), asserta(inventory(Enemy, X)), retract(nbInv(Sum)), NewSum is Sum + 1, asserta(nbInv(NewSum)), !.
+capture :- write('No Tokemon to capture!'), nl, !.
 
 /* Battle Phase */
 fight :- asserta(state(inFight)), write('Choose your tokemon! (Write pick(name_of_tokemon)'), nl, printAvailTokemon,nl,!.
