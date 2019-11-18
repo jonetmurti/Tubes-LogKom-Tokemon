@@ -23,9 +23,9 @@ start :-
         write('My name is Faris, I am the Mayor of the City'),nl,
         write('As you may already know, some wild Tokemon has been causing disturbance around the city.'), nl,
         write('They are led by three legendary Tokemon'),nl,
-        write('Those tree are Rahamon, Logkomon, and Hizmon.'),nl,
+        write('Those three are Rahamon, Logkomon, and Hizmon.'),nl,
         write('We need someone to get rid of those Tokemon, and we believe you are the right person, Mr. Trainer'),nl,
-        write('Your task, is to defeat or subdue two from the tree Legendary Tokemon'),nl,
+        write('Your task, is to defeat or subdue two from the three Legendary Tokemon'),nl,
         write('Do not worry, we already prepare a Tokemon that will help you get rid of those wild Tokemon.'),nl,
         write('Now, please choose the Tokemon you like, and good luck!'),nl,nl,
         write('Available commands:'),nl,
@@ -135,7 +135,8 @@ run :- write('You are not in Game!'), nl.
 /* Quit Command */
 quit :- forall(tokemonPos(X, Y, Z), retract(tokemonPos(X, Y, Z))), forall(state(X1), retract(state(X1))), forall(currTokemon(X2,Y2,Z2), retract(currTokemon(X2,Y2,Z2))),
         forall(currEnemy(X3,Y3), retract(currEnemy(X3,Y3))), forall(inventory(X4, Y4), retract(inventory(X4, Y4))), forall(nbInv(X5), retract(nbInv(X5))), 
-        forall(playerloc(X6,Y6), retract(playerloc(X6,Y6))), forall(alreadyHeal(X7), retract(alreadyHeal(X7))), forall(nLegend(X8), retract(nLegend(X8))).
+        forall(playerloc(X6,Y6), retract(playerloc(X6,Y6))), forall(alreadyHeal(X7), retract(alreadyHeal(X7))), forall(nLegend(X8), retract(nLegend(X8))),
+        write('So you prefer to run away then huh?').
 
 /* Capture Command */
 capture :- nbInv(X), X == 6, write('Inventory Full! Drop one of your Tokemon first!'), nl.
@@ -160,7 +161,7 @@ battleEval1 :- currEnemy(Enemy, Health), write(Enemy), write(' fainted, do you w
 
 battleEval2 :- currTokemon(Tokemon, Health1, Spc), Health1 > 0, battleStat.
 battleEval2 :- nbInv(X), X > 0, write('Pick another Tokemon!'), nl, retract(currTokemon(Tokemon, Health, Spc)), printAvailTokemon.
-battleEval2 :- write('You Lose! Thanks for playing!'), nl, quit.
+battleEval2 :- write('Semua Tokemon milikmu sudah mati'),nl, write('You Lose! Thanks for playing!'), nl, quit.
 
 /* Enemy Attack */
 enemyAtkProb(X) :- random(1, 11, X).
