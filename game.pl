@@ -5,7 +5,7 @@
 :-include('map.pl').
 
 /* Initiation */
-chooseTokemon :-repeat, write('Choose Your Tokemon : '), nl,
+chooseTokemon :-repeat, write('Choose Your Tokemon : (Write the name of the Tokemon)'), nl,
 				        write('1. seamon'), nl,
 				        write('2. jonemon'), nl,
 				        write('3. lemon'), nl, 
@@ -17,52 +17,49 @@ init :- asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), 
         chooseTokemon,!.
 
 /* Start Game */
-start :-  \+state(_),
-          write('Gotta catch them all!'),nl,nl,
-		  write('Hello there!'),nl, 
-          write('Welcome to the world of Tokemon!'),nl,
-          write('My nama is Aril!'),nl,
-          write('People call me the Tokemon Professor!'),nl, 
-          write('This world is inhabited by creatures called Tokemon!') ,nl,
-          write('There are hundreds of Tokemon loose in Labtek 5!') ,nl,
-          write('You can catch them all to get stronger, but what I am really interested in are the 2 legendary Tokemons, Icanmon dan Sangemon.') ,nl,
-          write('If you can defeat or capture all those Tokemons I will not kill you.'),nl,nl,
-          write('Available commands:'),nl,
-          write('start. --start the game!'),nl,
-          write('help. --show available commands'),nl,
-          write('quit. --quit the game'),nl,
-          write('w. a. s. d. --mov'),nl,
-          write('emap. --look at the map'),nl, 
-          write('heal. --cure Tokemon in inventory if in gym center'),nl,
-          write('status. --show your status'),nl,
-          write('save(Filenama). --save your game'),nl,
-          write('load(Filenama). --load previously saved game'),nl,					
-          write('Legends:'),nl,
-          write('-X = Pagar'),nl,
-          write('-P = Player'),nl,
-		  write('-G = Gym'),nl,
-          init,!.
+start :-  
+        write('Ah, Trainer, you finally come,'),nl,
+        write('Welcome to Labo Fennef City. My name is Faris, and I am the Mayor of the City'),nl,
+        write('As you may already know, some wild Tokemon has been causing disturbance around the city.'), nl,
+        write('They are led by three legendary Tokemon'),nl,
+        write('Those tree are Rahamon, Logkomon, and Hizmon.'),nl,
+        write('We need someone to get rid of those Tokemon, and we believe you are the right person, Mr. Trainer'),nl,
+        write('Your task, is to defeat or subdue two from the tree Legendary Tokemon'),nl,
+        write('Do not worry, we already prepare a Tokemon that will help you get rid of those wild Tokemon.'),nl,
+        write('Now, please choose the Tokemon you like, and good luck!'),nl,nl,
+        write('Available commands:'),nl,
+        write('start. --start the game!'),nl,
+        write('help. --show available commands'),nl,
+        write('quit. --quit the game'),nl,
+        write('w. a. s. d. --mov'),nl,
+        write('map. --look at the map'),nl, 
+        write('heal. --cure Tokemon in inventory if in gym center'),nl,
+        write('status. --show your status'),nl,
+        write('save(Filenama). --save your game'),nl,
+        write('load(Filenama). --load previously saved game'),nl,					
+        init.
 start :- state(_), write('Anda sudah berada didalam game.'),!.
 
 /* COMMAND : */
 
 /* Help command */
 help :- write('Help :'), nl, nl,
-		write('Available Commands : '), nl,
-        write('Start --start the game!'), nl, 
-        write('Help --show available commands'), nl,
-        write('Quit --quit the game'), nl, 
-        write('Move : w(North), a(West), s(South), d(East)'), nl,
-        write('Map'), nl,
-        write('Heal --cure Tokemon in inventory if in gym center'), nl,
-        write('Status --show your status'), nl,
-        write('Pick(Tokemon) --Capture the Tokemon and store it in your inventory'), nl,
-        write('Attack --use only in battle mode'), nl,
-        write('SpecialAttack --use only in battle mode'), nl,
-        write('Run --When Tokemon appears, you will not fight them'), nl, 
-        write('Drop(Tokemon). --Free your Tokemon from inventory'), nl,
-        write('save(Filenama). --save your game'),nl,
-        write('load(Filenama). --load previously saved game').
+	write('Available Commands : '), nl,
+        write('start            --start the game!'), nl, 
+        write('help             --show available commands'), nl,
+        write('quit             --quit the game'), nl, 
+        write('move : w(North), a(West), s(South), d(East)'), nl,
+        write('map              --show current map'), nl,
+        write('heal             --cure Tokemon in inventory if in gym center'), nl,
+        write('status           --show your status'), nl,
+        write('pick(Tokemon)    --Capture the Tokemon and store it in your inventory'), nl,
+        write('attack           --use only in battle mode'), nl,
+        write('specialAttack    --use only in battle mode'), nl,
+        write('run              --When Tokemon appears, you will not fight them'), nl, 
+        write('drop(Tokemon).   --Free your Tokemon from inventory'), nl,
+        write('save(Filenama).  --save your game'),nl,
+        write('load(Filenama).  --load previously saved game'),nl,
+	write('Note: setiap perintah harus diakhiri titik (.)'),nl.
 
 /* Heal Command */
 heal :- state(inGym), alreadyHeal(0), retract(alreadyHeal(0)), asserta(alreadyHeal(1)), healTokemon.
@@ -221,3 +218,6 @@ status :-
 	forall((nama(X,legendary),\+inventory(X,_)),(write(X),nl,
 	write('Health: '),health(X,Y), write(Y),nl,
 	write('Tipe: '),type(X,Z),write(Z),nl,nl)).
+
+map :-
+        cetakPeta.
