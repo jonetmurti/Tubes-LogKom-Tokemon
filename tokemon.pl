@@ -19,6 +19,16 @@ currTokemon :- write('You haven\'t choose your Tokemon').
 /* Numbers of legendary Tokemon */
 :- dynamic(nLegend/1).
 
+/* List of tokemon */
+/*:- dynamic(tokeLegend/1).
+tokeLegend([rahamon,logkomon,hizmon]).
+
+:- dynamic(tokeNormal/1).
+tokeNormal([seamon,kemon,jonemon,mamaLemon,lemon,suketmon,alphamon,betamon,gammamon,deltamon,epsilonmon,
+            lambdamon,pimon,thetamon,sigmamon,omegamon,rhomon,psimon,zetamon,etamon,kapamon,ximon,taumon,
+            chimon]).
+*/
+
 /* Legendary */
 
 nama(rahamon, legendary).
@@ -30,7 +40,6 @@ nama(jonemon, normal).
 nama(mamaLemon, normal).
 nama(lemon, normal).
 nama(suketmon, normal).
-
 nama(alphamon, normal).
 nama(betamon, normal).
 nama(gammamon, normal).
@@ -113,7 +122,7 @@ normalAtt(hizmon, 50).
 normalAtt(seamon, 20).
 normalAtt(jonemon, 15).
 normalAtt(mamaLemon, 15).
-normalAtt(lemon, 20).
+normalAtt(lemon, 500).
 normalAtt(kemon, 10).
 normalAtt(suketmon, 25).
 normalAtt(alphamon, 30).
@@ -163,6 +172,9 @@ spcAtt(ximon, 80).
 spcAtt(taumon, 80).
 spcAtt(chimon, 80).
 
+/* get legend position */
+getLegend(X,Y) :- nama(A,legendary), tokemonPos(A,X,Y).
+
 /* First Tokemon choose */
 firstTokemon(seamon).
 firstTokemon(jonemon).
@@ -206,8 +218,9 @@ initTokemon :- random(1, 11, X1), random(1, 11, Y1), asserta(tokemonPos(rahamon,
                random(1, 11, X26), random(1, 11, Y26), asserta(tokemonPos(taumon, X26, Y26)),
                random(1, 11, X27), random(1, 11, Y27), asserta(tokemonPos(chimon, X27,Y27)).
 
-updateTokemonPos :- forall(tokemonPos(Tokemon, X, Y), updatePos(Tokemon, X, Y)).
-updatePos(Tokemon, X, Y) :- retract(tokemonPos(Tokemon, X, Y)), random(1, 11, X1), random(1, 11, Y1), assertz(tokemonPos(Tokemon, X1, Y1)).
+updateTokemonPos :- forall(tokemonPos(Tokemon,X,Y), updatePos(Tokemon, X, Y)).
+updatePos(Tokemon, X, Y) :- nama(Tokemon,legendary).
+updatePos(Tokemon, X, Y) :- \+nama(Tokemon,legendary),retract(tokemonPos(Tokemon, X, Y)), random(1, 11, X1), random(1, 11, Y1), assertz(tokemonPos(Tokemon, X1, Y1)).
 
 /* Healing Tokemon in GYM */
 healTokemon :- forall(inventory(Tokemon, Health), procHeal(Tokemon, Health)).
@@ -220,3 +233,11 @@ procHeal(Tokemon, Health) :- retract(inventory(Tokemon, Health)), health(Tokemon
 printAvailTokemon :- write('Available Tokemon : '), nl,
                      forall(inventory(Tokemon, Health), printTokemonName(Tokemon)).
 printTokemonName(Tokemon) :- write('- '), write(Tokemon), nl.
+
+/*
+tokeToList :- tokeList(X) forall(nama(toke,tipe),sambung()).
+
+updateTokeL
+updateTokeL :- tokeLegend(X),
+*/
+

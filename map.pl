@@ -24,7 +24,6 @@ cetakBorderH(X) :-
 cetakBorder :-
     write('X'),!.
 
-
 cetakField(A,X,_) :-
     A>X, !.
 
