@@ -59,4 +59,4 @@ cekLoc :- playerloc(X, Y), tokemonPos(Tokemon, X1, Y1), X == X1, Y == Y1, health
           write('A wild tokemon appears!'), nl, write('Tokemon : '), write(Tokemon), nl, 
           write('Type : '), type(Tokemon, Type), write(Type), nl, 
           write('Health : '), write(Health), nl, nl, write('Fight or Run ?'), nl,!.
-cekLoc :- retract(state(_)), asserta(state(inMap)),!.
+cekLoc :- retract(state(_)), asserta(state(inMap)), retract(currCapture(_)), !.
