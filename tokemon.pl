@@ -1,5 +1,8 @@
 /* Tokemon DataBase */
 
+/* capture Tokemon */
+:- dynamic(currCapture/1).
+
 /* current player tokemon in battle (Tokemon, health) */
 :- dynamic(currTokemon/3).
 currTokemon :- write('You haven\'t choose your Tokemon').

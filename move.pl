@@ -58,7 +58,7 @@ d :- state(inBattle), write('You cannot move in battle!'), nl,!.
 d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
      XNew is X + 1,
      pagar(XNew,Y),
-     write('Anda bergerak ke timur.'), nl,!.
+     write('Ada pagar loh.'), nl,!.
 d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
      XNew is X + 1,
      retract(playerloc(X,Y)),
@@ -75,4 +75,4 @@ cekLoc :- playerloc(X, Y), tokemonPos(Tokemon, X1, Y1), X == X1, Y == Y1, health
           write('A wild tokemon appears!'), nl, write('Tokemon : '), write(Tokemon), nl, 
           write('Type : '), type(Tokemon, Type), write(Type), nl, 
           write('Health : '), write(Health), nl, nl, write('Fight or Run ?'), nl,!.
-cekLoc :- retract(state(_)), asserta(state(inMap)),!.
+cekLoc :- retract(state(_)), asserta(state(inMap)), retract(currCapture(_)), !.
