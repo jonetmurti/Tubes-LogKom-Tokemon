@@ -10,9 +10,7 @@ alreadyheal
 */
 sumInv(X) :- forall(inventory(Tokemon, Health), )
 sumNbInv(X) :- forall(nbInv(X), )
-sumNLegend(X) :- forall(
-    
-)
+sumNLegend(X) :- forall()
 sumTokemonPos(X) :-
 sumState(X) :-
 sumPlayerLoc(X) :-
