@@ -1,7 +1,7 @@
 /* Tokemon DataBase */
 
 /* current player tokemon in battle (Tokemon, health) */
-:- dynamic(currTokemon/2).
+:- dynamic(currTokemon/3).
 currTokemon :- write('You haven\'t choose your Tokemon').
 
 /* current enemy tokemon in battle (Tokemon, health) */ 
@@ -12,6 +12,9 @@ currTokemon :- write('You haven\'t choose your Tokemon').
 :- dynamic(inventory/2).
 /* nbInv  (number), number of tokemon in inventory */
 :- dynamic(nbInv/1).
+
+/* Numbers of legendary Tokemon */
+:- dynamic(nLegend/1).
 
 /* Legendary */
 
@@ -99,9 +102,8 @@ initTokemon :- random(1, 11, X1), random(1, 11, Y1), asserta(tokemonPos(rahamon,
                random(1, 11, X8), random(1, 11, Y8), asserta(tokemonPos(kemon, X8, Y8)),
                random(1, 11, X9), random(1, 11, Y9), asserta(tokemonPos(suketmon, X9, Y9)).
 
-delTokemonPos :- forall(tokemonPos(Tokemon, X, Y), retract(tokemonPos(Tokemon, X, Y))).
-
-updateTokemonPos :- delTokemonPos, initTokemon.
+updateTokemonPos :- forall(tokemonPos(Tokemon, X, Y), updatePos(Tokemon, X, Y)).
+updatePos(Tokemon, X, Y) :- retract(tokemonPos(Tokemon, X, Y)), random(1, 11, X1), random(1, 11, Y1), assertz(tokemonPos(Tokemon, X1, Y1)).
 
 /* Healing Tokemon in GYM */
 healTokemon :- forall(inventory(Tokemon, Health), procHeal(Tokemon, Health)).
