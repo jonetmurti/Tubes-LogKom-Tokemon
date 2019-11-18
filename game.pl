@@ -91,8 +91,8 @@ attack :- state(inBattle), currTokemon(Tokemon, Health1, Spc), type(Tokemon, X),
           X = fire, Y = water, retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att//2), asserta(currEnemy(Enemy, NewHealth)), battleStat, battleEval1.
 attack :- state(inBattle), currTokemon(Tokemon, Health1, Spc), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), 
           retract(currEnemy(Enemy, Health2)), NewHealth is (Health2 - Att), asserta(currEnemy(Enemy, NewHealth)), battleStat, battleEval1.
-attack :- state(inGame), write('You are not in battle!'), nl.
-attack :- write('You are not in Game!'), nl.
+attack :- state(inGame), write('You are not in battle!'), nl,!.
+attack :- write('You are not in Game!'), nl,!.
 
 /* Special Attack Command */
 specialAttack :- state(inBattle), currTokemon(Tokemon, Health1, Spc), Spc == 1, retract(currTokemon(Tokemon, Health1, Spc)), 
