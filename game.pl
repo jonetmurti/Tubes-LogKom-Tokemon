@@ -140,7 +140,7 @@ capture :- nbInv(X), X == 6, write('Inventory Full! Drop one of your Tokemon fir
 capture :- retract(currEnemy(Enemy, Health)), health(Enemy, X), asserta(inventory(Enemy, X)).
 
 /* Battle Phase */
-fight :- write('Choose your tokemon!'), nl, printAvailTokemon,nl,write('>'),read(X),inventory(X,Y),asserta(currTokemon(X,Y,0)).
+fight :- write('Choose your tokemon! (Write pick(name_of_tokemon)'), nl, printAvailTokemon,nl,write('>').
 battleStat :- nl, currEnemy(Enemy, Health1), type(enemy, X), write(Enemy), nl, write('Health : '), write(Health1), nl, write('Type : '), write(X), nl,
               nl, currTokemon(Tokemon, Health2, Spc), type(Tokemon, Y), write(Tokemon), nl, write('Health : '), write(Health2), nl, write('Type : '), write(Y), nl.
 
@@ -152,7 +152,7 @@ battleEval1 :- currEnemy(Enemy, Health), nama(Enemy, Type), Type = legendary, nL
                retract(state(inBattle)), asserta(state(inMap)),
                retract(currEnemy(_,_)).
 battleEval1 :- currEnemy(Enemy, Health), write(Enemy), write(' fainted, do you want to capture ?'), nl, 
-               retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), retract(inventory(Tokemon,_)),asserta(inventory(Tokemon, Health1)),
+               retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), asserta(inventory(Tokemon, Health1)),
                retract(state(inBattle)), asserta(state(inMap)),
                retract(currEnemy(_,_)).
 
