@@ -58,7 +58,7 @@ d :- state(inBattle), write('You cannot move in battle!'), nl,!.
 d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
      XNew is X + 1,
      pagar(XNew,Y),
-     write('Anda bergerak ke timur.'), nl,!.
+     write('Ada pagar loh.'), nl,!.
 d :- playerloc(X,Y),mapsize(Xmap,Ymap),X<Xmap,
      XNew is X + 1,
      retract(playerloc(X,Y)),
