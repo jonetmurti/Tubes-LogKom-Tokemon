@@ -14,10 +14,11 @@ chooseTokemon :-repeat, write('Choose Your Tokemon : '), nl,
 
 init :- asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), asserta(nLegend(3)),
         asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), cetakPeta, 
-        chooseTokemon.
+        chooseTokemon,!.
 
 /* Start Game */
-start :-  write('Gotta catch them all!'),nl,nl,
+start :-  \+state(_),
+          write('Gotta catch them all!'),nl,nl,
 		  write('Hello there!'),nl, 
           write('Welcome to the world of Tokemon!'),nl,
           write('My nama is Aril!'),nl,
@@ -40,7 +41,8 @@ start :-  write('Gotta catch them all!'),nl,nl,
           write('-X = Pagar'),nl,
           write('-P = Player'),nl,
 		  write('-G = Gym'),nl,
-          init.
+          init,!.
+start :- state(_), write('Anda sudah berada didalam game.'),!.
 
 /* COMMAND : */
 
@@ -61,18 +63,6 @@ help :- write('Help :'), nl, nl,
         write('Drop(Tokemon). --Free your Tokemon from inventory'), nl,
         write('save(Filenama). --save your game'),nl,
         write('load(Filenama). --load previously saved game').
-
-gameloop :- read(X),lakukan(X),\+state(_).
-
-lakukan(X) :- X==Start,write('Anda sedang berada dalam game.').
-lakukan(X) :- X==Help,help.
-lakukan(X) :- X==Quit,retract(state(_)).
-lakukan(X) :- X==Map,cetakPeta.
-lakukan(X) :- X==Heal,heal.
-lakukan(X) :- X==Status,status.
-lakukan(X) :- pick(_).
-lakukan(_) :- write('Command Tidak tersedia').
-
 
 /* Heal Command */
 heal :- state(inGym), alreadyHeal(0), retract(alreadyHeal(0)), asserta(alreadyHeal(1)), healTokemon.
@@ -138,9 +128,9 @@ drop(Tokemon) :- write('You are not in Game!'), nl.
 
 /* Run Command */
 runProb(X) :- random(1, 4, X).
-run :- state(inBattle), runProb(X), X == 1, write('You failed to run'), nl, fight.
-run :- state(inBattle), retract(currEnemy(X, Y)), retract(state(inBattle)), asserta(state(inMap)), write('You sucessfully escaped the Tokemon!'), nl.
-run :- state(inGame), write('You are not in battle!'), nl.
+run :- state(inBattle), runProb(X), X == 1, write('You failed to run'), nl, fight,!.
+run :- state(inBattle), retract(currEnemy(X, Y)), retract(state(inBattle)), asserta(state(inMap)), write('You sucessfully escaped the Tokemon!'), nl,!.
+run :- state(inGame), write('You are not in battle!'), nl,!.
 run :- write('You are not in Game!'), nl.
 
 /* Quit Command */
@@ -153,7 +143,7 @@ capture :- nbInv(X), X == 6, write('Inventory Full! Drop one of your Tokemon fir
 capture :- retract(currEnemy(Enemy, Health)), health(Enemy, X), asserta(inventory(Enemy, X)).
 
 /* Battle Phase */
-fight :- write('Choose your tokemon!'), nl, printAvailTokemon.
+fight :- write('Choose your tokemon!'), nl, printAvailTokemon,nl,write('>'),read(X),inventory(X,Y),asserta(currTokemon(X,Y,0)).
 battleStat :- nl, currEnemy(Enemy, Health1), type(enemy, X), write(Enemy), nl, write('Health : '), write(Health1), nl, write('Type : '), write(X), nl,
               nl, currTokemon(Tokemon, Health2, Spc), type(Tokemon, Y), write(Tokemon), nl, write('Health : '), write(Health2), nl, write('Type : '), write(Y), nl.
 
@@ -162,10 +152,12 @@ battleEval1 :- currEnemy(Enemy, Health), nama(Enemy, Type), Type = legendary, nL
 battleEval1 :- currEnemy(Enemy, Health), nama(Enemy, Type), Type = legendary, nLegend(N), NewN is N - 1, retract(nLegend(N)), asserta(nLegend(NewN)),
                write(Enemy), write(' fainted, you beat one legendary Tokemon!! do you want to capture ?'), nl, 
                retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), asserta(inventory(Tokemon, Health1)),
-               retract(state(inBattle)), asserta(state(inMap)).
+               retract(state(inBattle)), asserta(state(inMap)),
+               retract(currEnemy(_,_)).
 battleEval1 :- currEnemy(Enemy, Health), write(Enemy), write(' fainted, do you want to capture ?'), nl, 
                retract(tokemonPos(Enemy, X, Y)), retract(currTokemon(Tokemon, Health1, Spc)), asserta(inventory(Tokemon, Health1)),
-               retract(state(inBattle)), asserta(state(inMap)).
+               retract(state(inBattle)), asserta(state(inMap)),
+               retract(currEnemy(_,_)).
 
 battleEval2 :- currTokemon(Tokemon, Health1, Spc), Health1 > 0, battleStat.
 battleEval2 :- nbInv(X), X > 0, write('Pick another Tokemon!'), nl, retract(currTokemon(Tokemon, Health, Spc)), printAvailTokemon.
