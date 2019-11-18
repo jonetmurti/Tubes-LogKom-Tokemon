@@ -31,6 +31,25 @@ nama(mamaLemon, normal).
 nama(lemon, normal).
 nama(suketmon, normal).
 
+nama(alphamon, normal).
+nama(betamon, normal).
+nama(gammamon, normal).
+nama(deltamon, normal).
+nama(epsilonmon, normal).
+nama(lambdamon, normal).
+nama(pimon, normal).
+nama(thetamon, normal).
+nama(sigmamon, normal).
+nama(omegamon, normal).
+nama(rhomon, normal).
+nama(psimon, normal).
+nama(zetamon, normal).
+nama(etamon, normal).
+nama(kapamon, normal).
+nama(ximon, normal).
+nama(taumon, normal).
+nama(chimon, normal).
+
 health(hizmon, 1000).
 health(logkomon, 1000).
 health(rahamon, 1000).
@@ -40,16 +59,53 @@ health(mamaLemon, 180).
 health(lemon, 110).
 health(suketmon, 125).
 health(kemon, 200).
+health(alphamon, normal).
+health(betamon, normal).
+health(gammamon, 200).
+health(deltamon, 200).
+health(epsilonmon, 200).
+health(lambdamon, 200).
+health(pimon, 200).
+health(thetamon, 200).
+health(sigmamon, 200).
+health(omegamon, 200).
+health(rhomon, 200).
+health(psimon, 200).
+health(zetamon, 200).
+health(etamon, 200).
+health(kapamon, 200).
+health(ximon, 200).
+health(taumon, 200).
+health(chimon, 200).
 
-type(rahamon, fire).
 type(logkomon, water).
-type(hizmon, grass).
 type(seamon, water).
-type(jonemon, grass).
 type(mamaLemon, water).
+type(zetamon, water).
+type(etamon, water).
+type(kapamon, water).
+type(ximon, water).
+type(taumon, water).
+type(chimon, water).
+type(jonemon, grass).
+type(suketmon, grass).
+type(hizmon, grass).
+type(pimon, grass).
+type(thetamon, grass).
+type(sigmamon, grass).
+type(omegamon, grass).
+type(rhomon, grass).
+type(psimon, grass).
+type(rahamon, fire).
 type(lemon, fire).
 type(kemon, fire).
-type(suketmon, grass).
+type(alphamon, fire).
+type(betamon, fire).
+type(gammamon, fire).
+type(deltamon, fire).
+type(epsilonmon, fire).
+type(lambdamon, fire).
+
 
 normalAtt(rahamon, 60).
 normalAtt(logkomon, 40).
@@ -60,6 +116,24 @@ normalAtt(mamaLemon, 15).
 normalAtt(lemon, 20).
 normalAtt(kemon, 10).
 normalAtt(suketmon, 25).
+normalAtt(alphamon, 30).
+normalAtt(betamon, 30).
+normalAtt(gammamon, 30).
+normalAtt(deltamon, 30).
+normalAtt(epsilonmon, 30).
+normalAtt(lambdamon, 30).
+normalAtt(pimon, 30).
+normalAtt(thetamon, 30).
+normalAtt(sigmamon, 30).
+normalAtt(omegamon, 30).
+normalAtt(rhomon, 30).
+normalAtt(psimon, 30).
+normalAtt(zetamon, 30).
+normalAtt(etamon, 30).
+normalAtt(kapamon, 30).
+normalAtt(ximon, 30).
+normalAtt(taumon, 30).
+normalAtt(chimon, 30).
 
 spcAtt(rahamon, 70).
 spcAtt(logkomon, 90).
@@ -70,6 +144,24 @@ spcAtt(mamaLemon, 30).
 spcAtt(lemon, 35).
 spcAtt(kemon, 30).
 spcAtt(suketmon, 40).
+spcAtt(alphamon, 80).
+spcAtt(betamon, 80).
+spcAtt(gammamon, 80).
+spcAtt(deltamon, 80).
+spcAtt(epsilonmon, 80).
+spcAtt(lambdamon, 80).
+spcAtt(pimon, 80).
+spcAtt(thetamon, 80).
+spcAtt(sigmamon, 80).
+spcAtt(omegamon, 80).
+spcAtt(rhomon, 80).
+spcAtt(psimon, 80).
+spcAtt(zetamon, 80).
+spcAtt(etamon, 80).
+spcAtt(kapamon, 80).
+spcAtt(ximon, 80).
+spcAtt(taumon, 80).
+spcAtt(chimon, 80).
 
 /* First Tokemon choose */
 firstTokemon(seamon).

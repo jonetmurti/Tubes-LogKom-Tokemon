@@ -13,7 +13,7 @@ chooseTokemon :-repeat, write('Choose Your Tokemon : (Write the name of the Toke
                
 
 init :- asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), asserta(nLegend(3)),
-        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon,nl, cetakPeta, 
+        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon,nl, cetakPeta,  
         !.
 
 /* Start Game */
@@ -29,15 +29,16 @@ start :-
         write('Do not worry, we already prepare a Tokemon that will help you get rid of those wild Tokemon.'),nl,
         write('Now, please choose the Tokemon you like, and good luck!'),nl,nl,
         write('Available commands:'),nl,
-        write('start. --start the game!'),nl,
-        write('help. --show available commands'),nl,
-        write('quit. --quit the game'),nl,
-        write('w. a. s. d. --mov'),nl,
-        write('map. --look at the map'),nl, 
-        write('heal. --cure Tokemon in inventory if in gym center'),nl,
-        write('status. --show your status'),nl,
-        write('save(Filenama). --save your game'),nl,
-        write('load(Filenama). --load previously saved game'),nl,					
+        write('start            --start the game!'), nl, 
+        write('help             --show available commands'), nl,
+        write('quit             --quit the game'), nl, 
+        write('w, a, s, d       --mov'),nl,
+        write('map              --show current map'), nl,
+        write('heal             --cure Tokemon in inventory if in gym center'), nl,
+        write('status           --show your status'), nl,
+        write('save(Filenama)   --save your game'),nl,
+        write('load(Filenama)   --load previously saved game'),nl,
+	write('Note: setiap perintah harus diakhiri titik (.)'),nl,					
         init.
 
 /* COMMAND : */
@@ -68,11 +69,11 @@ heal :- state(inGame), write('You are not in the gym!'), nl.
 heal :- write('You are not in Game!'), nl.
 
 /* Pick Command */
+pick(Tokemon) :- state(inBattle), \+inventory(Tokemon,_), write('You don’t have that Tokemon!'), nl,!.
 pick(Tokemon) :- state(inBattle), inventory(Tokemon, Health), asserta(currTokemon(Tokemon, Health, 1)), retract(inventory(Tokemon, Health)), 
-                 nbInv(Sum), NewSum is (Sum - 1), retract(nbInv(Sum)), asserta(nbInv(NewSum)), battleStat.
-pick(Tokemon) :- state(inBattle), write('You don’t have that Tokemon!'), nl.
-pick(Tokemon) :- state(inGame), write('You are not in Battle!'), nl.
-pick(Tokemon) :- write('You are not in Game!'), nl.
+                 nbInv(Sum), NewSum is (Sum - 1), retract(nbInv(Sum)), asserta(nbInv(NewSum)), battleStat,!.
+pick(Tokemon) :- state(inGame), write('You are not in Battle!'), nl,!.
+pick(Tokemon) :- write('You are not in Game!'), nl,!.
 
 /* Attack Command */
 attack :- state(inBattle), currTokemon(Tokemon, Health1, Spc), type(Tokemon, X), normalAtt(Tokemon, Att), currEnemy(Enemy, Health2), type(Enemy, Y), 
