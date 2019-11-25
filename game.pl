@@ -5,6 +5,8 @@
 :-include('map.pl').
 :-include('loadsave.pl').
 
+state(inMenu).
+
 /* Initiation */
 chooseTokemon :-repeat, write('Choose Your Tokemon : (Write the name of the Tokemon)'), nl,
 				        write('1. seamon'), nl,
@@ -13,8 +15,8 @@ chooseTokemon :-repeat, write('Choose Your Tokemon : (Write the name of the Toke
 				        write('> '), read(X), firstTokemon(X),health(X,Y),asserta(inventory(X,Y)).
                
 
-init :- retract(state(_)), asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), asserta(nLegend(3)),
-        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon,nl, cetakPeta,  
+init :- retract(state(inMenu)), asserta(state(inGame)), asserta(state(inMap)), asserta(alreadyHeal(0)), asserta(nLegend(3)),
+        asserta(nbInv(1)), initTokemon, asserta(playerloc(1,1)), chooseTokemon,nl, cetakPeta,write(state),
         !.
 
 /* Start Game */
@@ -39,7 +41,7 @@ start :-
         write('status           --show your status'), nl,
         write('save(Filenama)   --save your game'),nl,
         write('load(Filenama)   --load previously saved game'),nl,
-	write('Note: setiap perintah harus diakhiri titik (.)'),nl,					
+	write('Note: setiap perintah harus diakhiri titik (.)'),nl,nl,					
         init,!.
 start :- state(_), write('Anda sudah berada didalam game.'),!.
 
@@ -143,7 +145,7 @@ quit :- state(inMenu), write('You are not in a game!'), nl, !.
 quit :- forall(tokemonPos(X, Y, Z), retract(tokemonPos(X, Y, Z))), forall(state(X1), retract(state(X1))), forall(currTokemon(X2,Y2,Z2), retract(currTokemon(X2,Y2,Z2))),
         forall(currEnemy(X3,Y3), retract(currEnemy(X3,Y3))), forall(inventory(X4, Y4), retract(inventory(X4, Y4))), forall(nbInv(X5), retract(nbInv(X5))), 
         forall(playerloc(X6,Y6), retract(playerloc(X6,Y6))), forall(alreadyHeal(X7), retract(alreadyHeal(X7))), forall(nLegend(X8), retract(nLegend(X8))),nl, asserta(state(inMenu)),
-        write('So you prefer to run away, huh?').
+        write('So you prefer to run away, huh?'),!.
 
 /* Capture Command */
 capture :- nbInv(X), X == 6, write('Inventory Full! Drop one of your Tokemon first!'), nl, !.

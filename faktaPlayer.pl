@@ -1,6 +1,8 @@
 /* Game State */
 :- dynamic(state/1).
-state(inMenu).
+
+
+
 /* Player Location in Map */
 :- dynamic(playerloc/2).
 
