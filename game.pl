@@ -234,7 +234,8 @@ status :-
 	write('Health: '), write(Y),nl,
 	write('Tipe: '),type(X,Z),write(Z),nl,nl)),
 	write('Your Enemy: '),nl,
-	forall((nama(X,legendary),\+inventory(X,_)),(write(X),nl,
+        forall((nama(X,legendary),\+inventory(X,_)),
+        (write(X),nl,
 	write('Health: '),health(X,Y), write(Y),nl,
 	write('Tipe: '),type(X,Z),write(Z),nl,nl)).
 
